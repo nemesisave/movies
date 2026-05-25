@@ -1,0 +1,6 @@
+{
+  "name": "Canela TV Clone & HTML5 Player",
+  "description": "A streaming platform cloned from Canela.tv, featuring a dashboard to manage and upload movies/series, multi-language support, and a high-performance custom HTML5 media player styled like JWPlayer with adaptive quality, subtitles, speed control, and theater modes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
