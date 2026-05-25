@@ -213,6 +213,7 @@ export default function JWPlayer({
   // Active settings popover state (holds 'settings' or null)
   const [activeMenu, setActiveMenu] = useState<'settings' | null>(null);
   const [activeSubtitle, setActiveSubtitle] = useState<'es' | 'en' | 'off'>('off');
+  const [activeAudio, setActiveAudio] = useState<'es' | 'en'>('es');
 
   // Subtitle styling customizations
   const [subSize, setSubSize] = useState<'sm' | 'base' | 'lg' | 'xl'>('base');
@@ -799,168 +800,113 @@ export default function JWPlayer({
         </div>
       )}
 
-      {/* UNIFIED ELITE PANEL DE CONFIGURACIÓN DEL REPRODUCTOR (Multi-column control dashboard overlay) */}
+      {/* UNIFIED ELITE PANEL DE CONFIGURACIÓN DEL REPRODUCTOR (Simplified control dashboard overlay matching TV screenshot layout) */}
       {activeMenu === 'settings' && controlsVisible && (
         <div
           id="jw-player-audio-subtitles-hud"
-          className="absolute left-1/2 bottom-36 -translate-x-1/2 w-[550px] max-w-[95vw] bg-[#0d0d0f]/98 border border-white/10 rounded-2xl p-5 flex flex-col gap-5 z-50 shadow-2xl backdrop-blur-xl animate-fadeIn font-sans"
+          className="absolute left-1/2 bottom-32 -translate-x-1/2 w-[650px] max-w-[95vw] bg-[#1c1d21]/96 border border-white/5 rounded-2xl p-6 flex flex-col gap-4 z-50 shadow-2xl backdrop-blur-xl animate-fadeIn font-sans"
         >
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/15 pb-2.5">
-            <div className="flex items-center gap-1.5 text-white">
-              <Sliders className="w-4 h-4 text-[#E50914]" />
-              <span className="font-extrabold text-xs uppercase tracking-widest">{language === 'es' ? 'Ajustes del Reproductor' : 'Player Settings'}</span>
-            </div>
-            <button
-              onClick={() => setActiveMenu(null)}
-              className="text-[#E50914] hover:text-red-500 text-xs font-black uppercase tracking-wider cursor-pointer"
-            >
-              Listo
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {/* COLUMN 1: AUDIO Y SUBTÍTULOS (Retains old state matching screenshot structure) */}
-            <div className="flex flex-col gap-2 border-r border-white/5 pr-2">
-              <span className="text-gray-400 font-bold text-[9px] tracking-widest uppercase flex items-center gap-1">
-                <Subtitles className="w-3 h-3 text-red-500" />
-                <span>Subtítulos</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* COLUMN 1: AUDIO */}
+            <div className="flex flex-col gap-3">
+              <span className="text-white font-extrabold text-sm md:text-base tracking-wide flex items-center gap-1.5 border-b border-white/10 pb-2">
+                {language === 'es' ? 'Audio' : 'Audio'}
               </span>
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-2">
                 {[
-                  { key: 'off', label: language === 'es' ? 'Desactivados' : 'Turn Off' },
-                  { key: 'es', label: 'Español (Castellano)' },
-                  { key: 'en', label: 'English (US)' }
+                  { key: 'es', label: language === 'es' ? 'Español' : 'Spanish' },
+                  { key: 'en', label: language === 'es' ? 'Inglés' : 'English' }
+                ].map((item) => {
+                  const isSel = activeAudio === item.key;
+                  return (
+                    <button
+                      key={item.key}
+                      type="button"
+                      onClick={() => {
+                        setActiveAudio(item.key as any);
+                        flashActionLabel(`${language === 'es' ? 'AUDIO' : 'AUDIO'}: ${item.key.toUpperCase()}`);
+                      }}
+                      className={`w-full text-left text-xs md:text-sm px-4 py-3 rounded-lg flex items-center justify-between transition-all select-none cursor-pointer ${
+                        isSel
+                          ? 'bg-[#333335] text-white border border-white/10 font-black'
+                          : 'bg-[#121214]/50 text-gray-400 hover:text-white hover:bg-white/[0.03]'
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      {isSel && <Check className="w-4 h-4 text-red-600 stroke-[3]" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* COLUMN 2: SUBTÍTULOS */}
+            <div className="flex flex-col gap-3">
+              <span className="text-white font-extrabold text-sm md:text-base tracking-wide flex items-center gap-1.5 border-b border-white/10 pb-2">
+                {language === 'es' ? 'Subtítulos' : 'Subtitles'}
+              </span>
+              <div className="flex flex-col gap-2">
+                {[
+                  { key: 'off', label: language === 'es' ? 'Desactivado' : 'Off' },
+                  { key: 'es', label: language === 'es' ? 'Español' : 'Spanish' },
+                  { key: 'en', label: language === 'es' ? 'Inglés' : 'English' }
                 ].map((item) => {
                   const isSel = activeSubtitle === item.key;
                   return (
                     <button
                       key={item.key}
+                      type="button"
                       onClick={() => {
                         setActiveSubtitle(item.key as any);
                         flashActionLabel(`SUBTÍTULOS: ${item.key.toUpperCase()}`);
                       }}
-                      className={`text-left text-xs px-2.5 py-1.5 rounded transition-all cursor-pointer flex items-center justify-between ${
-                        isSel ? 'bg-[#E50914] text-white font-bold' : 'text-gray-400 hover:text-white hover:bg-white/[0.04]'
+                      className={`w-full text-left text-xs md:text-sm px-4 py-3 rounded-lg flex items-center justify-between transition-all select-none cursor-pointer ${
+                        isSel
+                          ? 'bg-[#333335] text-white border border-white/10 font-black'
+                          : 'bg-[#121214]/50 text-gray-400 hover:text-white hover:bg-white/[0.03]'
                       }`}
                     >
-                      <span className="truncate">{item.label}</span>
-                      {isSel && <Check className="w-3.5 h-3.5" />}
+                      <span>{item.label}</span>
+                      {isSel && <Check className="w-4 h-4 text-red-600 stroke-[3]" />}
                     </button>
                   );
                 })}
               </div>
             </div>
 
-            {/* COLUMN 2: VELOCIDAD Y CLARIDAD (Added speed playback rate controller) */}
-            <div className="flex flex-col gap-2 border-r border-white/5 pr-2">
-              <span className="text-gray-400 font-bold text-[9px] tracking-widest uppercase flex items-center gap-1">
-                <Tv className="w-3 h-3 text-blue-500" />
-                <span>Velocidad</span>
+            {/* COLUMN 3: VELOCIDAD */}
+            <div className="flex flex-col gap-3">
+              <span className="text-white font-extrabold text-sm md:text-base tracking-wide flex items-center gap-1.5 border-b border-white/10 pb-2">
+                {language === 'es' ? 'Velocidad' : 'Speed'}
               </span>
-              <div className="grid grid-cols-2 gap-1.5">
-                {[0.5, 0.75, 1.0, 1.25, 1.5, 2.0].map((spd) => {
-                  const isSel = playSpeed === spd;
+              <div className="flex flex-col gap-2">
+                {[
+                  { key: 0.5, label: '0.5x' },
+                  { key: 1.0, label: language === 'es' ? 'Normal' : 'Normal' },
+                  { key: 1.25, label: '1.25x' },
+                  { key: 1.5, label: '1.5x' },
+                  { key: 2.0, label: '2.0x' }
+                ].map((item) => {
+                  const isSel = playSpeed === item.key;
                   return (
                     <button
-                      key={spd}
+                      key={item.key}
+                      type="button"
                       onClick={() => {
-                        setPlaySpeed(spd);
-                        flashActionLabel(`VELOCIDAD: ${spd}x`);
+                        setPlaySpeed(item.key);
+                        flashActionLabel(`VELOCIDAD: ${item.key}x`);
                       }}
-                      className={`text-center py-1 rounded text-xs transition-all cursor-pointer font-semibold ${
-                        isSel ? 'bg-blue-600 text-white font-black scale-102 border border-blue-450' : 'bg-neutral-900 border border-white/5 text-gray-400 hover:text-white'
+                      className={`w-full text-left text-xs md:text-sm px-4 py-3 rounded-lg flex items-center justify-between transition-all select-none cursor-pointer ${
+                        isSel
+                          ? 'bg-[#333335] text-white border border-white/10 font-black'
+                          : 'bg-[#121214]/50 text-gray-400 hover:text-white hover:bg-white/[0.03]'
                       }`}
                     >
-                      {spd === 1.0 ? 'Normal' : `${spd}x`}
+                      <span>{item.label}</span>
+                      {isSel && <Check className="w-4 h-4 text-red-600 stroke-[3]" />}
                     </button>
                   );
                 })}
-              </div>
-
-              {/* Cinematic Aura Ambient light control switch */}
-              <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between">
-                <span className="text-[10px] text-gray-500 font-bold">{language === 'es' ? 'Aura Ambilight' : 'Ambilight aura'}</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAmbientGlow(!ambientGlow);
-                    flashActionLabel(`AURA: ${!ambientGlow ? 'ON' : 'OFF'}`);
-                  }}
-                  className={`w-9 h-5 rounded-full p-0.5 transition-colors cursor-pointer ${ambientGlow ? 'bg-[#E50914]' : 'bg-neutral-800'}`}
-                >
-                  <div className={`bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ${ambientGlow ? 'translate-x-4' : 'translate-x-0'}`} />
-                </button>
-              </div>
-            </div>
-
-            {/* COLUMN 3: CALIDAD Y FORMATOS DE SUBTÍTULOS */}
-            <div className="flex flex-col gap-2">
-              <span className="text-gray-400 font-bold text-[9px] tracking-widest uppercase flex items-center gap-1">
-                <Sliders className="w-3 h-3 text-emerald-500" />
-                <span>Estilos y Calidad</span>
-              </span>
-              
-              {/* Quality Preset simulated */}
-              <div className="flex flex-wrap gap-1 mb-2">
-                {['Auto', '1080p', '720p', '480p'].map((q) => {
-                  const isSel = streamQuality === q;
-                  return (
-                    <button
-                      key={q}
-                      onClick={() => {
-                        setStreamQuality(q);
-                        flashActionLabel(`CALIDAD: ${q === 'Auto' ? 'AUTO ADAPTATIVA' : q}`);
-                      }}
-                      className={`px-2 py-1 rounded text-[10px] font-bold cursor-pointer uppercase ${
-                        isSel ? 'bg-emerald-600 text-white font-black' : 'bg-neutral-900 text-gray-400 hover:text-white'
-                      }`}
-                    >
-                      {q}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Subtext sizes and colors */}
-              <div className="space-y-2 border-t border-white/5 pt-2">
-                <div className="flex items-center justify-between gap-1 text-[10px]">
-                  <span className="text-gray-500 font-bold">{language === 'es' ? 'Letra:' : 'Font size:'}</span>
-                  <div className="flex gap-1 bg-black rounded p-0.5">
-                    {(['sm', 'base', 'lg', 'xl'] as const).map(sz => (
-                      <button
-                        key={sz}
-                        onClick={() => setSubSize(sz)}
-                        className={`px-1.5 py-0.5 rounded text-[9px] uppercase font-bold uppercase transition-all cursor-pointer ${
-                          subSize === sz ? 'bg-white text-black font-black' : 'text-gray-400 hover:text-white'
-                        }`}
-                      >
-                        {sz}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between gap-1 text-[10px]">
-                  <span className="text-gray-500 font-bold">{language === 'es' ? 'Color:' : 'Color:'}</span>
-                  <div className="flex gap-1 bg-black rounded p-0.5">
-                    {[
-                      { key: 'white', label: language === 'es' ? 'Bco' : 'Wht', class: 'bg-white text-black' },
-                      { key: 'yellow', label: language === 'es' ? 'Ama' : 'Yel', class: 'bg-yellow-400 text-black' },
-                      { key: 'emerald', label: language === 'es' ? 'Esm' : 'Emr', class: 'bg-emerald-400 text-black' }
-                    ].map(col => (
-                      <button
-                        key={col.key}
-                        onClick={() => setSubColor(col.key as any)}
-                        className={`px-1.5 py-0.5 rounded text-[9px] font-black transition-all cursor-pointer ${
-                          subColor === col.key ? `${col.class} scale-105` : 'text-gray-400 hover:text-white'
-                        }`}
-                      >
-                        {col.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -994,17 +940,6 @@ export default function JWPlayer({
                   {/* Background track bar */}
                   <div className="absolute inset-x-0 h-[3px] bg-white/20 rounded-full" />
                   
-                  {/* Yellow breaks / chapter dots */}
-                  <div className="absolute inset-x-0 h-[3px] pointer-events-none">
-                    {[8, 16, 25, 34, 43, 52, 61, 70, 79, 88, 96].map((pct) => (
-                      <div
-                        key={pct}
-                        className="absolute w-[4.5px] h-[4.5px] rounded-full bg-[#E5B800]"
-                        style={{ left: `${pct}%`, top: '50%', transform: 'translate(-50%, -50%)' }}
-                      />
-                    ))}
-                  </div>
-
                   {/* Active playing RED progress bar */}
                   <div
                     className="absolute left-0 h-[3px] bg-[#E50914] rounded-full"
@@ -1076,10 +1011,10 @@ export default function JWPlayer({
               <button
                 type="button"
                 onClick={() => setActiveMenu(activeMenu === 'settings' ? null : 'settings')}
-                className="flex items-center gap-2 text-white hover:text-gray-300 bg-white/5 hover:bg-white/10 px-4.5 py-2 rounded-lg border border-white/10 transition-all font-sans text-xs md:text-sm font-semibold tracking-wide cursor-pointer focus:outline-none"
+                className="flex items-center gap-2 text-white hover:text-gray-300 bg-[#333333]/40 hover:bg-[#333333]/85 px-5 py-2.5 rounded-lg border border-white/10 transition-all font-sans text-xs md:text-sm font-semibold tracking-wide cursor-pointer focus:outline-none"
               >
-                <Settings className="w-4 h-4 stroke-[2]" />
-                <span>Audio y Ajustes</span>
+                <Subtitles className="w-4 h-4 text-white" />
+                <span>Audio y Subtítulos</span>
               </button>
 
               {/* Right Column Icons: Keyboard shortcuts menu, picture-in-picture stream casting, maximize sizing */}

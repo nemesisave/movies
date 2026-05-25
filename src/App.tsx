@@ -25,7 +25,9 @@ import {
   Tv2,
   Clock,
   Compass,
-  Radio
+  Radio,
+  Award,
+  User
 } from 'lucide-react';
 import { Video, Language, UserReview, Episode } from './types';
 import { DEFAULT_VIDEOS, TRANSLATIONS } from './data';
@@ -63,7 +65,7 @@ export const RECIEN_AGREGADO_CLASSICS = [
     genre_es: "Classic, Drama, Musical",
     genre_en: "Classic, Drama, Musical",
     duration: "1h 40m",
-    poster_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400",
+    poster_url: "/src/assets/images/tu_y_las_nubes_poster_1779730297599.png",
     backdrop_url: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1600",
     rating: "TV-PG",
     year: "1955",
@@ -81,7 +83,7 @@ export const RECIEN_AGREGADO_CLASSICS = [
     genre_es: "Classic, Comedia, Drama",
     genre_en: "Classic, Comedy, Drama",
     duration: "1h 35m",
-    poster_url: "https://images.unsplash.com/photo-1544698310-74ea9d1c8258?q=80&w=400",
+    poster_url: "/src/assets/images/alla_en_el_rancho_grande_poster_1779730319187.png",
     backdrop_url: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=1600",
     rating: "TV-PG",
     year: "1936",
@@ -99,7 +101,7 @@ export const RECIEN_AGREGADO_CLASSICS = [
     genre_es: "Classic, Comedia, Musical",
     genre_en: "Classic, Comedy, Musical",
     duration: "1h 50m",
-    poster_url: "https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=400",
+    poster_url: "/src/assets/images/dos_tipos_de_cuidado_poster_1779730334542.png",
     backdrop_url: "https://images.unsplash.com/photo-1544698310-74ea9d1c8258?q=80&w=1600",
     rating: "TV-PG",
     year: "1953",
@@ -117,7 +119,7 @@ export const RECIEN_AGREGADO_CLASSICS = [
     genre_es: "Classic, Drama, Musical",
     genre_en: "Classic, Drama, Musical",
     duration: "1h 30m",
-    poster_url: "https://images.unsplash.com/photo-1490578474895-6acd904d2ef6?q=80&w=400",
+    poster_url: "/src/assets/images/las_mananitas_poster_1779730349256.png",
     backdrop_url: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=1600",
     rating: "TV-PG",
     year: "1948",
@@ -127,7 +129,7 @@ export const RECIEN_AGREGADO_CLASSICS = [
   },
   {
     id: "v-cartas-marcadas",
-    title_es: "Cartas Marcadas",
+    title_es: "Carta Marcadas",
     title_en: "Cartas Marcadas",
     description_es: "Pedro Infante y Marga López protagonizan una emotiva historia de promesas, secretos familiares y cartas de amor perdidas en el tiempo.",
     description_en: "Pedro Infante and Marga Lopez star in an emotional story of promises, family secrets, and love letters lost in time.",
@@ -135,7 +137,7 @@ export const RECIEN_AGREGADO_CLASSICS = [
     genre_es: "Classic, Drama, Romance",
     genre_en: "Classic, Drama, Romance",
     duration: "1h 42m",
-    poster_url: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=400",
+    poster_url: "/src/assets/images/cartas_marcadas_poster_1779730364368.png",
     backdrop_url: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1600",
     rating: "TV-PG",
     year: "1948",
@@ -153,7 +155,7 @@ export const RECIEN_AGREGADO_CLASSICS = [
     genre_es: "Classic, Comedia, Romance",
     genre_en: "Classic, Comedy, Romance",
     duration: "1h 38m",
-    poster_url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=400",
+    poster_url: "/src/assets/images/escuela_para_solteras_poster_1779730381832.png",
     backdrop_url: "https://images.unsplash.com/photo-1544698310-74ea9d1c8258?q=80&w=1600",
     rating: "TV-PG",
     year: "1965",
@@ -171,7 +173,7 @@ export const RECIEN_AGREGADO_CLASSICS = [
     genre_es: "Classic, Comedia, Musical",
     genre_en: "Classic, Comedy, Musical",
     duration: "1h 35m",
-    poster_url: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=400",
+    poster_url: "/src/assets/images/cartas_a_ufemia_poster_1779730398533.png",
     backdrop_url: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=1600",
     rating: "TV-PG",
     year: "1952",
@@ -189,12 +191,48 @@ export const RECIEN_AGREGADO_CLASSICS = [
     genre_es: "Classic, Musical, Comedia",
     genre_en: "Classic, Musical, Comedy",
     duration: "1h 30m",
-    poster_url: "https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=400",
+    poster_url: "/src/assets/images/solo_veracruz_es_bello_poster_1779730411705.png",
     backdrop_url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600",
     rating: "TV-PG",
     year: "1961",
     cast: ["Rosita Quintana", "Manuel Capetillo", "Queta Garay"],
     director: "Roselio Gómez",
+    country: "Mexico"
+  },
+  {
+    id: "v-ahi-viene-martin-corona",
+    title_es: "Ahí Viene Martín Corona",
+    title_en: "Ahí Viene Martín Corona",
+    description_es: "Pedro Infante da vida al legendario vaquero justiciero Martín Corona, enfrentado a las injusticias de los malhechores del norte mexicano.",
+    description_en: "Pedro Infante brings to life the legendary cowboy outlaw Martín Corona, fighting against the lawless bands of Northern Mexico.",
+    category: "movies",
+    genre_es: "Classic, Action, Drama",
+    genre_en: "Classic, Action, Drama",
+    duration: "1h 35m",
+    poster_url: "/src/assets/images/ahi_viene_martin_corona_poster_1779730427836.png",
+    backdrop_url: "https://images.unsplash.com/photo-1485642234645-a62644f84728?q=80&w=1600",
+    rating: "TV-PG",
+    year: "1952",
+    cast: ["Pedro Infante", "Sara Montiel", "Eulalio González Piporro"],
+    director: "Miguel Zacarías",
+    country: "Mexico"
+  },
+  {
+    id: "v-cuando-quiere-un-mexicano",
+    title_es: "Cuando Quiere un Mexicano",
+    title_en: "Cuando Quiere un Mexicano",
+    description_es: "El amor florece entre cantares y malentendidos rancheros de la mano de Jorge Negrete en su plenitud como el supremo charro cantor.",
+    description_en: "Love blossoms between beautiful ranch songs and comedy sketch entanglements featuring Jorge Negrete as the singer charro.",
+    category: "movies",
+    genre_es: "Classic, Romance, Musical",
+    genre_en: "Classic, Romance, Musical",
+    duration: "1h 30m",
+    poster_url: "/src/assets/images/cuando_quiere_un_mexicano_poster_1779730444622.png",
+    backdrop_url: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=1600",
+    rating: "TV-PG",
+    year: "1944",
+    cast: ["Jorge Negrete", "Amanda Ledesma", "Enrique Herrera"],
+    director: "Juan Bustillo Oro",
     country: "Mexico"
   }
 ];
@@ -415,6 +453,8 @@ export default function App() {
   const [isTheater, setIsTheater] = useState<boolean>(false);
   const [activeEpisode, setActiveEpisode] = useState<Episode | null>(null);
   const [isPlayerOpen, setIsPlayerOpen] = useState<boolean>(false);
+  const [isHeaderSearchExpanded, setIsHeaderSearchExpanded] = useState<boolean>(false);
+  const [activeHeaderMenu, setActiveHeaderMenu] = useState<'club' | 'profile' | null>(null);
   const [activeEpisodeGroupTab, setActiveEpisodeGroupTab] = useState<string>('E1 - E25');
   const [selectedSeason, setSelectedSeason] = useState<number>(1);
 
@@ -467,6 +507,7 @@ export default function App() {
   const bestOfCanelaRef = useRef<HTMLDivElement>(null);
   const classicsCarouselRef = useRef<HTMLDivElement>(null);
   const liveChannelsCarouselRef = useRef<HTMLDivElement>(null);
+  const recommendedCarouselRef = useRef<HTMLDivElement>(null);
 
   // Sync club points & trivia to localStorages
   useEffect(() => {
@@ -856,21 +897,22 @@ export default function App() {
     <div className="min-h-screen bg-[#0A0A0B] text-white/95 font-sans selection:bg-yellow-500 selection:text-black">
       
       {/* BRANDING HEADER NAVIGATION */}
-      <header className="sticky top-0 z-50 bg-[#0A0A0B]/95 border-b border-white/5 backdrop-blur-md px-4 py-3 md:px-8 flex items-center justify-between transition-colors">
-        <div className="flex items-center gap-6 md:gap-8">
+      <header id="main-header" className="sticky top-0 z-50 bg-gradient-to-b from-[#0e0f12] via-[#0e0f12]/95 to-[#0e0f12]/80 backdrop-blur-md border-b border-white/5 px-4 py-3 md:px-8 flex items-center justify-between transition-all select-none">
+        <div className="flex items-center gap-6 md:gap-8 lg:gap-14">
           
           {/* Logo styled like Canela.TV in screenshot */}
           <div 
+            id="brand-logo"
             onClick={() => { setSelectedCategory('all'); setSearchQuery(''); setSelectedVideoForDetails(null); }}
-            className="flex items-center cursor-pointer font-sans"
+            className="flex items-center cursor-pointer select-none"
           >
-            <span className="text-xl md:text-2xl font-black tracking-tight text-[#E50914] font-sans">
+            <span className="text-xl md:text-2xl font-black tracking-tighter text-[#E50914] font-sans">
               CANELA.TV
             </span>
           </div>
 
           {/* Desktop Categories Filters row exactly matching screenshot */}
-          <nav className="hidden lg:flex items-center gap-6 text-xs md:text-sm font-semibold text-gray-300">
+          <nav id="desktop-nav" className="hidden lg:flex items-center gap-5 xl:gap-8 text-xs xl:text-sm font-bold text-gray-300">
             {[
               { id: 'all', label: language === 'es' ? 'Inicio' : 'Home' },
               { id: 'guia', label: language === 'es' ? 'Guía de TV' : 'TV Guide' },
@@ -886,7 +928,9 @@ export default function App() {
               const isSelected = selectedCategory === tab.id || (tab.id === 'all' && selectedCategory === 'all');
               return (
                 <button
+                  id={`nav-tab-${tab.id}`}
                   key={tab.id}
+                  type="button"
                   onClick={() => {
                     setSelectedVideoForDetails(null);
                     if (tab.id === 'guia' || tab.id === 'musica' || tab.id === 'noticias' || tab.id === 'canelitas') {
@@ -895,121 +939,297 @@ export default function App() {
                       setSelectedCategory(tab.id);
                     }
                   }}
-                  className={`hover:text-white transition-all cursor-pointer ${
-                    isSelected ? 'text-white font-extrabold relative' : 'text-gray-400 font-medium'
+                  className={`hover:text-white transition-all cursor-pointer whitespace-nowrap ${
+                    isSelected ? 'text-white font-black scale-102 font-sans' : 'text-zinc-300/90 hover:text-white font-semibold font-sans font-medium'
                   }`}
                 >
                   {tab.label}
-                  {isSelected && (
-                    <div className="absolute -bottom-4 left-0 right-0 h-0.5 bg-[#E50914]" />
-                  )}
                 </button>
               );
             })}
           </nav>
         </div>
 
-        {/* Global Toolbar and Controls */}
-        <div className="flex items-center gap-3 md:gap-4">
+        {/* Global Toolbar and Controls exactly matching the 3 square actions in screenshot */}
+        <div id="header-toolbar" className="flex items-center gap-3 md:gap-4 relative">
           
-          {/* Search bar widget */}
-          <div className="relative hidden md:block">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder={t.searchPlaceholder}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-neutral-900 border border-white/10 focus:border-[#E50914] text-xs text-white placeholder:text-gray-500 rounded-full pl-9 pr-4 py-2 w-48 md:w-56 outline-none transition-all"
-            />
-          </div>
-
-          {/* Language Switcher Button */}
-          <button
-            onClick={() => {
-              const next = language === 'es' ? 'en' : 'es';
-              setLanguage(next);
-            }}
-            className="w-8 h-8 rounded-full border border-white/10 hover:bg-neutral-900 flex items-center justify-center text-xs font-bold text-gray-300 cursor-pointer transition-colors"
-            title={language === 'es' ? 'Switch to English' : 'Cambiar a Español'}
-          >
-            {language === 'es' ? 'EN' : 'ES'}
-          </button>
-
-          {/* Search toggle inside circle for aesthetics mirroring screenshot */}
-          <button
-            onClick={() => {
-              // Trigger simple search focus or action
-              const query = prompt(language === 'es' ? 'Buscar en CANELA.TV:' : 'Search in CANELA.TV:');
-              if (query !== null) setSearchQuery(query);
-            }}
-            className="w-8 h-8 rounded-full border border-white/10 hover:bg-neutral-900 flex items-center justify-center text-gray-300 hover:text-white cursor-pointer transition-colors"
-            title={language === 'es' ? 'Buscar' : 'Search'}
-          >
-            <Search className="w-4 h-4" />
-          </button>
-
-          {isLoggedIn && (
-            <div className="hidden sm:flex flex-col items-end leading-none">
-              <span className="text-[9px] bg-red-650 tracking-wider text-red-500 font-extrabold font-mono uppercase">ADMIN</span>
-              <span className="text-[10px] text-gray-400 mt-0.5 truncate max-w-[120px] font-sans font-bold">{currentUser}</span>
+          {/* Animated Slide-out Search active state text input */}
+          {isHeaderSearchExpanded && (
+            <div id="header-search-input-container" className="relative animate-fadeIn hidden md:block">
+              <input
+                id="header-search-textbox"
+                type="text"
+                placeholder={language === 'es' ? 'Buscar en CANELA.TV...' : 'Search in CANELA.TV...'}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="bg-[#121214]/90 border border-white/10 text-xs text-white placeholder:text-gray-500 rounded-lg pl-3 pr-8 py-2 md:py-2.5 w-36 md:w-52 outline-none focus:border-[#E50914] transition-all"
+                autoFocus
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape') setIsHeaderSearchExpanded(false);
+                }}
+              />
+              {searchQuery && (
+                <button 
+                  id="clear-header-search-btn"
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
             </div>
           )}
 
-          {/* Admin upload dashboard Toggle Styled like settings Hexagon in screenshot */}
+          {/* ICON BUTTON 1: Search glass icon inside beautiful glassy rounded square */}
           <button
+            id="header-search-toggle-btn"
+            type="button"
             onClick={() => {
-              if (isLoggedIn) {
-                setIsAdminOpen(!isAdminOpen);
-              } else {
-                setIsLoginModalOpen(true);
-              }
+              setIsHeaderSearchExpanded(!isHeaderSearchExpanded);
+              setActiveHeaderMenu(null);
             }}
-            className={`w-8 h-8 rounded-full border flex items-center justify-center cursor-pointer transition-all ${
-              isAdminOpen
-                ? 'bg-[#E50914] border-[#E50914] text-white shadow-lg shadow-red-950/20'
-                : 'border-white/10 text-gray-300 hover:bg-neutral-900 hover:text-white'
-            }`}
-            title={t.addMovie}
+            className="w-10 h-10 md:w-11 md:h-11 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-neutral-300 hover:text-white hover:bg-white/[0.12] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            title={language === 'es' ? 'Buscar clásicos' : 'Search classics'}
           >
-            <Settings className={`w-4 h-4 ${isAdminOpen ? 'animate-spin' : ''}`} />
+            <Search className="w-5 h-5 text-white" />
           </button>
 
-          {/* Profile Badge representing profile icon in screenshot */}
-          <div 
-            onClick={() => {
-              if (isLoggedIn) {
-                if (confirm(language === 'es' ? '¿Quieres cerrar tu sesión administrativa?' : 'Do you want to log out from administration?')) {
-                  setIsLoggedIn(false);
-                  setCurrentUser(null);
-                  localStorage.removeItem('canela_logged_in');
-                  localStorage.removeItem('canela_current_user');
-                  setIsAdminOpen(false);
-                }
-              } else {
-                setIsLoginModalOpen(true);
-              }
-            }}
-            className={`w-8 h-8 rounded-full border flex items-center justify-center font-bold text-xs select-none cursor-pointer transition-all ${
-              isLoggedIn ? 'border-emerald-500 text-emerald-400 bg-emerald-500/10' : 'border-white/10 text-gray-300 hover:text-white bg-neutral-800'
-            }`}
-            title={isLoggedIn ? (language === 'es' ? 'Cerrar sesión' : 'Sign out') : (language === 'es' ? 'Iniciar sesión' : 'Login')}
-          >
-            {isLoggedIn ? (
-              <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-              </svg>
-            ) : (
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 12a5 5 0 100-10 5 5 0 000 10zm-7 8a7 7 0 0114 0H5z" />
-              </svg>
+          {/* ICON BUTTON 2: Loyalty program Star Badge wrapper matching screenshot exactly */}
+          <div id="club-canela-menu-wrapper" className="relative">
+            <button
+              id="header-club-toggle-btn"
+              type="button"
+              onClick={() => {
+                setActiveHeaderMenu(activeHeaderMenu === 'club' ? null : 'club');
+              }}
+              className={`w-10 h-10 md:w-11 md:h-11 rounded-lg border flex items-center justify-center hover:scale-105 active:scale-95 transition-all cursor-pointer ${
+                activeHeaderMenu === 'club' 
+                  ? 'bg-white/[0.16] text-[#E50914] border-white/20' 
+                  : 'bg-white/[0.06] border-white/[0.08] text-neutral-300 hover:text-white hover:bg-white/[0.12]'
+              }`}
+              title="Club Canela"
+            >
+              <Award className="w-5 h-5 text-white" />
+            </button>
+
+            {/* Loyalty club drawer popover */}
+            {activeHeaderMenu === 'club' && (
+              <div id="club-canela-drawer" className="absolute right-0 top-14 w-80 md:w-96 bg-[#16171b]/98 border border-white/10 rounded-2xl p-5 shadow-2xl backdrop-blur-xl z-[100] animate-fadeIn font-sans text-white">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+                  <div className="flex items-center gap-2">
+                    <Award className="w-5 h-5 text-amber-500" />
+                    <span className="font-extrabold text-xs uppercase tracking-wider text-amber-400">Club Canela Premium</span>
+                  </div>
+                  <button 
+                    id="close-club-drawer-btn"
+                    type="button" 
+                    onClick={() => setActiveHeaderMenu(null)} 
+                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Points State Display */}
+                <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 border border-white/5 rounded-xl p-4 mb-4 text-center">
+                  <span className="text-[10px] text-gray-400 block font-bold uppercase tracking-widest">{language === 'es' ? 'Tus Puntos Acumulados' : 'Your Club Points'}</span>
+                  <div className="flex items-center justify-center gap-2 mt-1">
+                    <Trophy className="w-5 h-5 text-amber-400" />
+                    <span className="text-3xl font-black text-white font-mono">{clubPoints}</span>
+                    <span className="text-xs text-amber-400 font-bold bg-amber-400/10 px-1.5 py-0.5 rounded">PTS</span>
+                  </div>
+                  <p className="text-[10px] text-gray-400 mt-2 font-medium">
+                    {language === 'es' ? '¡Sigue acumulando puntos resolviendo la trivia diaria!' : 'Earn points fast by playing the daily classic trivia!'}
+                  </p>
+                </div>
+
+                {/* Daily Trivia section */}
+                <div className="bg-[#121214]/60 border border-white/5 rounded-xl p-4">
+                  <div className="flex items-center gap-1.5 mb-2.5">
+                    <Sparkles className="w-4 h-4 text-[#E50914] animate-pulse" />
+                    <h4 className="text-[11px] font-black uppercase tracking-wider text-white">{language === 'es' ? 'Trivia de Oro Diaria' : 'Daily Classics Trivia'}</h4>
+                  </div>
+                  
+                  {triviaStatus === 'correct' ? (
+                    <div className="text-center py-4 text-emerald-400 font-bold space-y-1">
+                      <Check className="w-8 h-8 mx-auto text-emerald-400 border-2 border-emerald-400 rounded-full p-1 mb-2 animate-bounce flex items-center justify-center" />
+                      <p className="text-xs">{language === 'es' ? '¡Trivia completada con éxito hoy!' : 'Trivia successfully completed today!'}</p>
+                      <p className="text-[10px] text-gray-400 font-light">{language === 'es' ? 'Vuelve mañana para nuevos clásicos.' : 'Come back tomorrow for new classics.'}</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      <p className="text-xs text-gray-300 font-bold leading-relaxed">
+                        {language === 'es' 
+                          ? '¿Quién interpretó al carismático Pepe el Toro en la mítica película de oro "Nosotros los Pobres"?' 
+                          : 'Who played Pepe el Toro in the Mexican golden cinema masterpiece "Nosotros los Pobres"?'
+                        }
+                      </p>
+                      
+                      <div className="flex flex-col gap-1.5">
+                        {[
+                          { key: 'A', label: "Pedro Infante", correct: true },
+                          { key: 'B', label: "Jorge Negrete", correct: false },
+                          { key: 'C', label: "Cantinflas", correct: false }
+                        ].map(opt => (
+                          <button
+                            id={`trivia-opt-${opt.key}`}
+                            key={opt.key}
+                            type="button"
+                            onClick={() => {
+                              if (opt.correct) {
+                                setClubPoints(prev => prev + 150);
+                                setTriviaStatus('correct');
+                              } else {
+                                alert(language === 'es' ? 'Incorrecto. ¡Inténtalo de nuevo!' : 'Wrong option. Try again!');
+                              }
+                            }}
+                            className="w-full text-left text-xs px-3 py-2 rounded bg-black/45 hover:bg-white/[0.04] text-gray-300 hover:text-white border border-white/5 transition-all font-medium cursor-pointer"
+                          >
+                            <span className="font-extrabold text-[#E50914] mr-2">{opt.key}.</span> {opt.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* ICON BUTTON 3: User login/avatar profile button inside glassy rounded square matching screenshot */}
+          <div id="profile-menu-wrapper" className="relative">
+            <button
+              id="header-profile-toggle-btn"
+              type="button"
+              onClick={() => {
+                setActiveHeaderMenu(activeHeaderMenu === 'profile' ? null : 'profile');
+              }}
+              className={`w-10 h-10 md:w-11 md:h-11 rounded-lg border flex items-center justify-center hover:scale-105 active:scale-95 transition-all cursor-pointer ${
+                activeHeaderMenu === 'profile' 
+                  ? 'bg-white/[0.16] text-[#E50914] border-white/20' 
+                  : 'bg-white/[0.06] border-white/[0.08] text-neutral-300 hover:text-white hover:bg-white/[0.12]'
+              }`}
+              title={language === 'es' ? 'Ajustes de Perfil' : 'Profile Settings'}
+            >
+              <User className="w-5 h-5 text-white" />
+            </button>
+
+            {/* Profile actions menu dropdown flyout */}
+            {activeHeaderMenu === 'profile' && (
+              <div id="profile-flyout-menu" className="absolute right-0 top-14 w-64 bg-[#16171b]/98 border border-white/10 rounded-xl p-4 shadow-2xl backdrop-blur-xl z-[100] animate-fadeIn font-sans text-white">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3">
+                  <span className="font-extrabold text-xs uppercase tracking-wider text-gray-300">{language === 'es' ? 'Mi Perfil' : 'My Account'}</span>
+                  <button 
+                    id="close-profile-menu-btn"
+                    type="button"
+                    onClick={() => setActiveHeaderMenu(null)} 
+                    className="text-gray-400 hover:text-white cursor-pointer"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {isLoggedIn ? (
+                  <div className="space-y-3.5">
+                    {/* Logged in User admin card */}
+                    <div className="flex items-center gap-2 p-2 bg-neutral-900/60 border border-white/5 rounded-lg">
+                      <div className="w-8 h-8 rounded-full bg-red-650 flex items-center justify-center font-black text-xs text-white uppercase select-none">
+                        {currentUser ? currentUser[0] : 'U'}
+                      </div>
+                      <div className="flex-1 min-w-0 leading-tight">
+                        <p className="text-xs font-black text-white truncate">{currentUser}</p>
+                        <p className="text-[9px] text-[#E50914] font-extrabold tracking-widest font-mono uppercase mt-0.5">ADMINISTRADOR</p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      {/* Language switcher option */}
+                      <button
+                        id="profile-lang-switcher-btn"
+                        type="button"
+                        onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
+                        className="w-full text-left text-xs px-3 py-2 rounded bg-[#121214]/40 hover:bg-[#121214]/90 border border-transparent hover:border-white/5 flex items-center justify-between text-gray-300 hover:text-white font-medium transition-all cursor-pointer"
+                      >
+                        <div className="flex items-center gap-2">
+                          <Globe className="w-4 h-4 text-gray-400" />
+                          <span>{language === 'es' ? 'Idioma' : 'Language'}</span>
+                        </div>
+                        <span className="font-extrabold text-[#E50914] uppercase tracking-wider text-[11px] font-mono">{language === 'es' ? 'ES' : 'EN'}</span>
+                      </button>
+
+                      {/* Content panel toggle button */}
+                      <button
+                        id="profile-admin-dashboard-btn"
+                        type="button"
+                        onClick={() => {
+                          setIsAdminOpen(!isAdminOpen);
+                          setActiveHeaderMenu(null);
+                        }}
+                        className="w-full text-left text-xs px-3 py-2 rounded bg-[#121214]/40 hover:bg-[#121214]/90 border border-transparent hover:border-white/5 flex items-center gap-2 text-gray-300 hover:text-white font-medium transition-all cursor-pointer"
+                      >
+                        <Settings className="w-4 h-4 text-gray-400" />
+                        <span>{isAdminOpen ? (language === 'es' ? 'Cerrar Gestor' : 'Close Admin Panel') : (language === 'es' ? 'Gestor de Películas' : 'Admin Film Uploads')}</span>
+                      </button>
+                    </div>
+
+                    <button
+                      id="profile-logout-btn"
+                      type="button"
+                      onClick={() => {
+                        setIsLoggedIn(false);
+                        setCurrentUser(null);
+                        localStorage.removeItem('canela_logged_in');
+                        localStorage.removeItem('canela_current_user');
+                        setIsAdminOpen(false);
+                        setActiveHeaderMenu(null);
+                      }}
+                      className="w-full text-center py-2 bg-red-650 hover:bg-red-750 text-white font-extrabold text-xs rounded transition-all cursor-pointer"
+                    >
+                      {language === 'es' ? 'Cerrar Sesión' : 'Sign Out'}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-3.5 text-center">
+                    <p className="text-xs text-gray-400 leading-relaxed">
+                      {language === 'es' ? 'Inicia sesión como administrador para subir nuevos clásicos o editar comentarios.' : 'Login as administrator to upload classics or manage user reviews.'}
+                    </p>
+
+                    <button
+                      id="profile-login-btn"
+                      type="button"
+                      onClick={() => {
+                        setIsLoginModalOpen(true);
+                        setActiveHeaderMenu(null);
+                      }}
+                      className="w-full text-center py-2.5 bg-[#E50914] hover:bg-red-750 text-white font-bold text-xs rounded-lg transition-all cursor-pointer"
+                    >
+                      {language === 'es' ? 'Iniciar Sesión Admin' : 'Admin Login'}
+                    </button>
+
+                    <div className="border-t border-white/5 pt-2 flex justify-center">
+                      <button
+                        id="profile-lang-fallback-btn"
+                        type="button"
+                        onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
+                        className="flex items-center gap-1.5 text-[10px] text-gray-400 hover:text-white transition-colors cursor-pointer"
+                      >
+                        <Globe className="w-3.5 h-3.5 text-gray-500" />
+                        <span>{language === 'es' ? 'Cambiar a Inglés' : 'Switch to English'}</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
           </div>
 
           {/* Mobile hamburger menu */}
           <button
+            id="mobile-menu-hamburger-btn"
+            type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-1.5 bg-neutral-905 border border-white/10 rounded-lg text-white icon-cursor cursor-pointer"
+            className="lg:hidden p-1.5 bg-neutral-900 border border-white/10 rounded-lg text-white icon-cursor cursor-pointer"
           >
             <Menu className="w-5 h-5" />
           </button>
@@ -1465,52 +1685,70 @@ export default function App() {
           }
 
           {/* TAMBIÉN TE PUEDE GUSTAR (You May Also Like) CLASSICS SECTION - Match TV Screenshot */}
-          <div className="max-w-7xl mx-auto px-6 md:px-16 py-10">
+          <div className="w-full px-6 md:px-16 py-10" id="tambien-te-puede-gustar-section">
             <h3 className="text-xl md:text-2xl font-black text-white mb-6 font-sans tracking-tight">
               {language === 'es' ? 'También te puede gustar' : 'You may also like'}
             </h3>
             
             {/* Horizontal Grid Slider of Retro Golden Era Cinema or Soap Opera Posters */}
-            <div className="flex gap-4 overflow-x-auto pb-6 pt-1 justify-start scrollbar-thin scroll-smooth mask-fade-right">
-              {((selectedVideoForDetails.category === 'novelas' || selectedVideoForDetails.category === 'series') ? RECIEN_AGREGADO_NOVELAS : RECIEN_AGREGADO_CLASSICS).map((classic) => {
-                const isSelected = selectedVideoForDetails.id === classic.id;
-                const isNovela = classic.category === 'novelas';
-                return (
-                  <div
-                    key={classic.id}
-                    onClick={() => handleSelectClassicMovie(classic)}
-                    className="w-[120px] sm:w-[150px] md:w-[172px] shrink-0 group cursor-pointer transition-all duration-300 select-none"
-                  >
-                    <div className="aspect-[2/3] relative rounded-md overflow-hidden bg-neutral-900 border border-white/10 group-hover:border-white/30 transition-all shadow-lg">
-                      <img
-                        referrerPolicy="no-referrer"
-                        src={classic.poster_url}
-                        alt={classic.title_es}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                        loading="lazy"
-                      />
-                      {/* Dark gradient vignette over poster card */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-2 md:p-3">
-                        <span className="text-[9px] uppercase tracking-wider text-[#E50914] font-bold mb-0.5">
-                          {isNovela ? (language === 'es' ? 'Novela' : 'Novela') : (language === 'es' ? 'Cine de Oro' : 'Classic Cinema')}
-                        </span>
-                        <p className="text-[10px] text-gray-300 font-sans leading-tight line-clamp-2">
-                          {language === 'es' ? classic.description_es : classic.description_en}
-                        </p>
+            <div className="relative group/carousel w-full">
+              {/* Left Arrow Button */}
+              <button
+                onClick={() => scrollCarousel(recommendedCarouselRef, 'left')}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 h-[85%] px-4 bg-black/60 hover:bg-black/95 text-white rounded-r-md transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 flex items-center justify-center cursor-pointer border-r border-t border-b border-white/10 hover:scale-105 active:scale-95 shadow-md"
+                aria-label="Scroll Left"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+
+              <div 
+                ref={recommendedCarouselRef}
+                className="flex gap-4 overflow-x-auto pb-2 pt-1 justify-start no-scrollbar scroll-smooth mask-fade-right w-full"
+              >
+                {((selectedVideoForDetails.category === 'novelas' || selectedVideoForDetails.category === 'series') ? RECIEN_AGREGADO_NOVELAS : RECIEN_AGREGADO_CLASSICS).map((classic) => {
+                  const isSelected = selectedVideoForDetails.id === classic.id;
+                  const isNovela = classic.category === 'novelas';
+                  return (
+                    <div
+                      key={classic.id}
+                      onClick={() => handleSelectClassicMovie(classic)}
+                      className="w-[120px] sm:w-[150px] md:w-[172px] shrink-0 group cursor-pointer transition-all duration-300 select-none"
+                      title={language === 'es' ? classic.title_es : classic.title_en}
+                    >
+                      <div className="aspect-[2/3] relative rounded-[4px] overflow-hidden bg-neutral-900 border-[3.5px] border-[#eae6ce] group-hover:border-white transition-all duration-300 shadow-xl group-hover:shadow-[0_4px_25px_rgba(255,255,255,0.15)]">
+                        <img
+                          referrerPolicy="no-referrer"
+                          src={classic.poster_url}
+                          alt={classic.title_es}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                          loading="lazy"
+                        />
+                        {/* Dark gradient vignette over poster card */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2.5">
+                          <span className="text-[9px] uppercase tracking-wider text-[#E50914] font-black mb-0.5">
+                            {isNovela ? (language === 'es' ? 'Novela' : 'Novela') : (language === 'es' ? 'Cine de Oro' : 'Classic Cinema')}
+                          </span>
+                          <h4 className="text-[10px] sm:text-xs font-black text-white leading-tight mb-1 truncate">
+                            {language === 'es' ? classic.title_es : classic.title_en}
+                          </h4>
+                          <p className="text-[8px] sm:text-[9px] text-gray-300 font-sans leading-relaxed line-clamp-3">
+                            {language === 'es' ? classic.description_es : classic.description_en}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                    {/* Poster Label underneath */}
-                    <div className="mt-2 space-y-0.5">
-                      <h4 className="text-[11px] sm:text-xs font-bold text-gray-200 group-hover:text-white transition-colors truncate">
-                        {language === 'es' ? classic.title_es : classic.title_en}
-                      </h4>
-                      <p className="text-[9px] text-gray-500 font-bold tracking-tight">
-                        {classic.year} • {classic.duration}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+
+              {/* Right Arrow Button */}
+              <button
+                onClick={() => scrollCarousel(recommendedCarouselRef, 'right')}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 h-[85%] px-4 bg-black/60 hover:bg-black/95 text-white rounded-l-md transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 flex items-center justify-center cursor-pointer border-l border-t border-b border-white/10 hover:scale-105 active:scale-95 shadow-md"
+                aria-label="Scroll Right"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
             </div>
           </div>
 
