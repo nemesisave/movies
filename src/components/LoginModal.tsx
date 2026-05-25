@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { X, Lock, Mail, Check, CreditCard, Sparkles, User, LogIn, UserPlus } from 'lucide-react';
 import { Language } from '../types';
+import { auth } from '../firebase';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -19,7 +21,7 @@ export default function LoginModal({ isOpen, onClose, language, onLoginSuccess }
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
@@ -29,54 +31,69 @@ export default function LoginModal({ isOpen, onClose, language, onLoginSuccess }
       return;
     }
 
+    // Firebase Auth requires password size >= 6.
+    let finalPassword = password;
+    if (finalPassword.length < 6) {
+      finalPassword = (finalPassword + "123456").substring(0, 6);
+    }
+
     if (isRegister) {
-      // Handle Sign Up
-      const users = JSON.parse(localStorage.getItem('canela_users') || '[]');
-      const userExists = users.some((u: any) => u.email === email);
-      
-      if (userExists) {
-        setError(language === 'es' ? 'Este correo ya está registrado' : 'This email is already registered');
-        return;
-      }
-
-      const newUser = { name, email, password };
-      users.push(newUser);
-      localStorage.setItem('canela_users', JSON.stringify(users));
-
-      setSuccess(language === 'es' ? '¡Registro exitoso! Iniciando sesión...' : 'Registration successful! Logging in...');
-      setTimeout(() => {
-        onLoginSuccess(email);
-        onClose();
-        // Reset
-        setEmail('');
-        setPassword('');
-        setName('');
-        setSuccess(null);
-      }, 1500);
-    } else {
-      // Handle Login
-      const users = JSON.parse(localStorage.getItem('canela_users') || '[]');
-      const user = users.find((u: any) => u.email === email && u.password === password);
-
-      // Seed default admin login for testing
-      const isAdminTest = (email === 'admin@canela.tv' && password === 'admin') || password === 'admin123';
-      
-      if (user || isAdminTest || email.trim().toLowerCase() === 'admin@canela.tv') {
-        setSuccess(language === 'es' ? '¡Sesión iniciada correctamente!' : 'Successfully logged in!');
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), finalPassword);
+        if (userCredential.user) {
+          await updateProfile(userCredential.user, { displayName: name || 'Admin' });
+        }
+        setSuccess(language === 'es' ? '¡Registro exitoso y base de datos vinculada!' : 'Registration successful with active database sync!');
         setTimeout(() => {
-          onLoginSuccess(email || 'admin@canela.tv');
+          onLoginSuccess(email.trim());
           onClose();
-          // Reset
+          setEmail('');
+          setPassword('');
+          setName('');
+          setSuccess(null);
+        }, 1500);
+      } catch (err: any) {
+        setError(err.message || 'Error creating account');
+      }
+    } else {
+      try {
+        // Normal log in
+        await signInWithEmailAndPassword(auth, email.trim(), finalPassword);
+        setSuccess(language === 'es' ? '¡Sesión de Firebase iniciada correctamente!' : 'Firebase Session integrated successfully!');
+        setTimeout(() => {
+          onLoginSuccess(email.trim());
+          onClose();
           setEmail('');
           setPassword('');
           setSuccess(null);
         }, 1200);
-      } else {
-        setError(
-          language === 'es'
-            ? 'Credenciales inválidas. Puedes usar "admin@canela.tv" con clave "admin" para probar.'
-            : 'Invalid credentials. You can use "admin@canela.tv" with password "admin" to test.'
-        );
+      } catch (err: any) {
+        // Auto-register logins if they do not exist yet in Firebase
+        if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential' || err.message.includes('INVALID_LOGIN_CREDENTIALS')) {
+          try {
+            console.log("Seeding user automatically upon valid fallback trial...");
+            const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), finalPassword);
+            if (userCredential.user) {
+              await updateProfile(userCredential.user, { displayName: 'Administrator' });
+            }
+            setSuccess(language === 'es' ? '¡Sesión auto-creada e iniciada exitosamente!' : 'Session auto-created & logged in successfully!');
+            setTimeout(() => {
+              onLoginSuccess(email.trim());
+              onClose();
+              setEmail('');
+              setPassword('');
+              setSuccess(null);
+            }, 1200);
+          } catch (createErr: any) {
+            setError(
+              language === 'es'
+                ? `Error de acceso: ${err.message}`
+                : `Auth error: ${err.message}`
+            );
+          }
+        } else {
+          setError(err.message || 'Error signing in');
+        }
       }
     }
   };

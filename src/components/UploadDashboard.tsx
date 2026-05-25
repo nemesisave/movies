@@ -91,6 +91,10 @@ export default function UploadDashboard({
 
   const [notification, setNotification] = useState<string | null>(null);
 
+  // Search queries for admin console search bars
+  const [editSearchQuery, setEditSearchQuery] = useState('');
+  const [episodeSeriesSearchQuery, setEpisodeSeriesSearchQuery] = useState('');
+
   // Auto-initialize first editing option or series option
   useEffect(() => {
     if (videos.length > 0 && !editingVideoId) {
@@ -637,24 +641,95 @@ export default function UploadDashboard({
         <form onSubmit={handlePublishOrEdit} className="space-y-6">
           {/* If EDITING TAB, show selector first */}
           {activeTab === 'edit' && (
-            <div className="bg-neutral-900 border border-white/5 p-4 rounded-xl flex flex-col md:flex-row gap-4 items-center justify-between">
-              <div className="flex items-center gap-2">
-                <RefreshCw className="w-4 h-4 text-yellow-500 animate-spin-slow" />
-                <span className="text-xs font-bold text-gray-300 uppercase tracking-widest">
-                  {language === 'es' ? 'Selecciona Video para Editar:' : 'Choose video to edit:'}
-                </span>
+            <div className="bg-neutral-900/90 border border-white/10 p-5 rounded-2xl space-y-4">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <RefreshCw className="w-4 h-4 text-yellow-500 animate-spin-slow" />
+                  <span className="text-xs font-bold text-gray-200 uppercase tracking-widest">
+                    {language === 'es' ? 'Buscador y Selector de Video a Editar:' : 'Search and Choose Video to Edit:'}
+                  </span>
+                </div>
+                {editingVideoId && (
+                  <div className="text-xs text-yellow-400 font-bold bg-yellow-400/10 border border-yellow-400/20 px-2.5 py-1 rounded-md shrink-0">
+                    {language === 'es' ? 'Editando actualmente:' : 'Currently editing:'} <span className="text-white">
+                      {(() => {
+                        const currentEd = videos.find(v => v.id === editingVideoId);
+                        return currentEd ? (language === 'es' ? currentEd.title_es : currentEd.title_en) : '';
+                      })()}
+                    </span>
+                  </div>
+                )}
               </div>
-              <select
-                value={editingVideoId}
-                onChange={(e) => handleLoadVideoForEditing(e.target.value)}
-                className="bg-black border border-white/10 rounded-lg text-sm text-yellow-400 font-bold px-3 py-2 outline-none w-full md:w-80 cursor-pointer"
-              >
-                {videos.map(v => (
-                  <option key={v.id} value={v.id}>
-                    [{v.category.toUpperCase()}] {language === 'es' ? v.title_es : v.title_en}
-                  </option>
-                ))}
-              </select>
+
+              {/* SEARCH BOX FOR EASY FILTERING */}
+              <div className="relative">
+                <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder={language === 'es' ? 'Escribe el nombre de la película o serie para filtrar al instante...' : 'Type film or series title to instantly filter...'}
+                  value={editSearchQuery}
+                  onChange={(e) => setEditSearchQuery(e.target.value)}
+                  className="w-full bg-black/60 border border-white/10 hover:border-white/20 focus:border-[#E50914] text-xs md:text-sm text-white placeholder:text-gray-500 rounded-lg pl-10 pr-4 py-2.5 outline-none transition-all"
+                />
+              </div>
+
+              {/* DISPLAY FILTERED VIDEOS IN A COMPACT SCROLLABLE VISUAL CARD list */}
+              {(() => {
+                const searchLower = editSearchQuery.toLowerCase().trim();
+                const filtered = videos.filter(v => 
+                  v.title_es.toLowerCase().includes(searchLower) || 
+                  v.title_en.toLowerCase().includes(searchLower) ||
+                  v.category.toLowerCase().includes(searchLower)
+                );
+
+                if (filtered.length === 0) {
+                  return (
+                    <p className="text-xs text-red-500 italic py-2 text-center font-bold">
+                      {language === 'es' ? 'No se encontraron resultados para tu búsqueda.' : 'No matching videos found.'}
+                    </p>
+                  );
+                }
+
+                return (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 max-h-[220px] overflow-y-auto pr-1">
+                    {filtered.map(v => {
+                      const isSelected = v.id === editingVideoId;
+                      return (
+                        <button
+                          key={v.id}
+                          type="button"
+                          onClick={() => {
+                            handleLoadVideoForEditing(v.id);
+                          }}
+                          className={`flex items-center gap-2.5 p-2 rounded-lg border text-left transition-all cursor-pointer ${
+                            isSelected 
+                              ? 'bg-[#E50914]/15 border-[#E50914] text-white shadow shadow-red-950/25' 
+                              : 'bg-black/45 border-white/5 hover:border-white/15 text-gray-300 hover:text-white hover:bg-white/[0.02]'
+                          }`}
+                        >
+                          <img 
+                            src={v.poster_url || "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=200"} 
+                            alt={v.title_es} 
+                            referrerPolicy="no-referrer"
+                            className="w-8 h-11 rounded object-cover shrink-0 bg-neutral-900 border border-white/5"
+                          />
+                          <div className="min-w-0 flex-1 leading-tight">
+                            <span className="text-[9px] px-1 py-0.2 bg-white/5 border border-white/15 rounded text-gray-400 font-bold uppercase tracking-wide block w-max mb-1">
+                              {v.category === 'movies' ? (language === 'es' ? 'Película' : 'Movie') : (language === 'es' ? 'Serie' : 'Series')}
+                            </span>
+                            <p className="text-xs font-black truncate text-white">
+                              {language === 'es' ? v.title_es : v.title_en}
+                            </p>
+                            <p className="text-[10px] text-gray-400 truncate mt-0.5 font-medium">
+                              {v.genre_es || v.year}
+                            </p>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
             </div>
           )}
 
@@ -1105,32 +1180,98 @@ export default function UploadDashboard({
       {/* TAB 3: DEDICATED SEASONS AND EPISODES CREATION & DELETION GRID */}
       {activeTab === 'episodes' && (
         <div className="space-y-6">
-          <div className="p-4 bg-neutral-900 border border-white/5 rounded-xl flex flex-col md:flex-row gap-4 items-center justify-between">
-            <div className="flex flex-col">
-              <span className="text-xs font-bold text-white uppercase tracking-widest">
-                {language === 'es' ? '1. Selecciona la Serie o Novela:' : '1. Choose Series or Novela:'}
-              </span>
-              <span className="text-[10px] text-gray-400">
-                {language === 'es' ? 'Añade episodios a la base de datos local adaptiva.' : 'Add episodes into adaptive local database.'}
-              </span>
+          <div className="p-5 bg-neutral-900/95 border border-white/10 rounded-2xl space-y-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+              <div className="flex flex-col">
+                <span className="text-xs font-black text-white uppercase tracking-widest flex items-center gap-2">
+                  <Layers className="w-4 h-4 text-[#E50914]" />
+                  <span>{language === 'es' ? '1. Selecciona o Busca la Serie o Novela:' : '1. Search & Select Series or Soap Opera:'}</span>
+                </span>
+                <span className="text-[10px] text-gray-400">
+                  {language === 'es' ? 'Filtra por nombre y haz clic para cargar sus temporadas y capítulos.' : 'Filter by name and click to configure seasons and episodes.'}
+                </span>
+              </div>
+              {selectedSeriesId && activeSeriesForEpisodes && (
+                <div className="text-xs text-yellow-400 font-bold bg-yellow-500/10 border border-yellow-500/20 px-2.5 py-1 rounded-md">
+                  {language === 'es' ? 'Gestionando ahora:' : 'Managing now:'} <span className="text-white">{language === 'es' ? activeSeriesForEpisodes.title_es : activeSeriesForEpisodes.title_en}</span>
+                </div>
+              )}
             </div>
 
             {seriesAndNovelas.length === 0 ? (
-              <p className="text-xs text-red-400 font-bold italic py-2">
+              <p className="text-xs text-red-400 font-bold italic py-4 text-center">
                 {language === 'es' ? '¡Por favor agrega primero una serie!' : 'Please upload a series first!'}
               </p>
             ) : (
-              <select
-                value={selectedSeriesId}
-                onChange={(e) => setSelectedSeriesId(e.target.value)}
-                className="bg-black border border-white/10 focus:border-[#E50914] rounded-lg text-sm text-yellow-400 font-bold px-3 py-2.5 outline-none w-full md:w-80 cursor-pointer"
-              >
-                {seriesAndNovelas.map(v => (
-                  <option key={v.id} value={v.id}>
-                    [{v.category.toUpperCase()}] {language === 'es' ? v.title_es : v.title_en}
-                  </option>
-                ))}
-              </select>
+              <div className="space-y-3">
+                {/* Search box */}
+                <div className="relative">
+                  <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    placeholder={language === 'es' ? 'Buscar serie/novela por nombre...' : 'Search series/show by title...'}
+                    value={episodeSeriesSearchQuery}
+                    onChange={(e) => setEpisodeSeriesSearchQuery(e.target.value)}
+                    className="w-full bg-black/60 border border-white/10 hover:border-white/20 focus:border-[#E50914] text-xs text-white placeholder:text-gray-500 rounded-lg pl-9 pr-4 py-2 outline-none transition-all"
+                  />
+                </div>
+
+                {/* Grid layout */}
+                {(() => {
+                  const queryLower = episodeSeriesSearchQuery.toLowerCase().trim();
+                  const filtered = seriesAndNovelas.filter(s => 
+                    s.title_es.toLowerCase().includes(queryLower) || 
+                    s.title_en.toLowerCase().includes(queryLower)
+                  );
+
+                  if (filtered.length === 0) {
+                    return (
+                      <p className="text-xs text-red-400 italic py-2 text-center">
+                        {language === 'es' ? 'No se encontraron series para este término.' : 'No matching series.'}
+                      </p>
+                    );
+                  }
+
+                  return (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 py-1 max-h-[160px] overflow-y-auto pr-1">
+                      {filtered.map(s => {
+                        const isSelected = s.id === selectedSeriesId;
+                        const epCount = s.episodes ? s.episodes.length : 0;
+                        return (
+                          <button
+                            key={s.id}
+                            type="button"
+                            onClick={() => setSelectedSeriesId(s.id)}
+                            className={`flex items-center gap-2.5 p-2 rounded-lg border text-left transition-all cursor-pointer ${
+                              isSelected 
+                                ? 'bg-[#E50914]/15 border-[#E50914] text-white shadow shadow-red-950/30' 
+                                : 'bg-black/45 border-white/5 hover:border-white/10 text-gray-300 hover:text-white hover:bg-white/[0.02]'
+                            }`}
+                          >
+                            <img 
+                              src={s.poster_url || "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=200"} 
+                              alt={s.title_es}
+                              referrerPolicy="no-referrer"
+                              className="w-8 h-11 rounded object-cover shrink-0 bg-neutral-900 border border-white/5"
+                            />
+                            <div className="min-w-0 flex-1 leading-tight">
+                              <p className="text-xs font-black truncate text-white">
+                                {language === 'es' ? s.title_es : s.title_en}
+                              </p>
+                              <p className="text-[10px] text-gray-400 mt-0.5">
+                                {language === 'es' ? `${epCount} capítulos` : `${epCount} episodes`}
+                              </p>
+                              <span className="text-[9px] text-[#E50914] font-bold mt-1 uppercase block tracking-wider">
+                                {s.category === 'novelas' ? (language === 'es' ? 'Novela' : 'Soap Opera') : (language === 'es' ? 'Serie' : 'TV Series')}
+                              </span>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
+              </div>
             )}
           </div>
 

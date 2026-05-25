@@ -34,6 +34,18 @@ import { DEFAULT_VIDEOS, TRANSLATIONS } from './data';
 import JWPlayer from './components/JWPlayer';
 import UploadDashboard from './components/UploadDashboard';
 import LoginModal from './components/LoginModal';
+import { auth } from './firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { 
+  fetchVideosFromFirestore, 
+  saveVideoToFirestore, 
+  deleteVideoFromFirestore, 
+  fetchReviewsFromFirestore, 
+  saveReviewToFirestore, 
+  deleteReviewFromFirestore, 
+  getUserProfile, 
+  saveUserProfile 
+} from './lib/firebaseService';
 
 // Live Chat messages pool for Canales En Vivo
 const MOCK_CHAT_POOL = [
@@ -509,17 +521,38 @@ export default function App() {
   const liveChannelsCarouselRef = useRef<HTMLDivElement>(null);
   const recommendedCarouselRef = useRef<HTMLDivElement>(null);
 
-  // Sync club points & trivia to localStorages
+  // Sync club points & trivia to localStorages & Firestore
   useEffect(() => {
     localStorage.setItem('canela_club_points', clubPoints.toString());
+    if (auth.currentUser) {
+      saveUserProfile(auth.currentUser.uid, {
+        id: auth.currentUser.uid,
+        email: auth.currentUser.email || '',
+        clubPoints
+      }).catch(e => console.error("Error saving user points profile:", e));
+    }
   }, [clubPoints]);
 
   useEffect(() => {
     localStorage.setItem('canela_trivia_solved', triviaStatus === 'correct' ? 'true' : 'false');
+    if (auth.currentUser) {
+      saveUserProfile(auth.currentUser.uid, {
+        id: auth.currentUser.uid,
+        email: auth.currentUser.email || '',
+        triviaSolved: triviaStatus === 'correct'
+      }).catch(e => console.error("Error saving user trivia profile:", e));
+    }
   }, [triviaStatus]);
 
   useEffect(() => {
     localStorage.setItem('canela_totebag', toteBagStatus);
+    if (auth.currentUser) {
+      saveUserProfile(auth.currentUser.uid, {
+        id: auth.currentUser.uid,
+        email: auth.currentUser.email || '',
+        totebag: toteBagStatus
+      }).catch(e => console.error("Error saving user gift status:", e));
+    }
   }, [toteBagStatus]);
 
   // Set up slide auto-play for majestic cinematic experience
@@ -561,7 +594,7 @@ export default function App() {
     return () => clearInterval(chatInterval);
   }, [isLiveStream]);
 
-  // Sync to localStorages
+  // Sync to localStorages and Firestore
   useEffect(() => {
     localStorage.setItem('canela_lang', language);
   }, [language]);
@@ -572,11 +605,85 @@ export default function App() {
 
   useEffect(() => {
     localStorage.setItem('canela_favorites', JSON.stringify(favorites));
+    if (auth.currentUser) {
+      saveUserProfile(auth.currentUser.uid, {
+        id: auth.currentUser.uid,
+        email: auth.currentUser.email || '',
+        favorites
+      }).catch(e => console.error("Error saving favorites profile:", e));
+    }
   }, [favorites]);
 
   useEffect(() => {
     localStorage.setItem('canela_reviews', JSON.stringify(reviews));
   }, [reviews]);
+
+  // Load and subscribe to database catalog and comments from Firestore on mount
+  useEffect(() => {
+    async function loadResources() {
+      try {
+        const dbVideos = await fetchVideosFromFirestore();
+        setVideos(dbVideos);
+        if (dbVideos.length > 0) {
+          setActiveVideo(dbVideos[0]);
+        }
+
+        const dbReviews = await fetchReviewsFromFirestore();
+        if (dbReviews.length > 0) {
+          setReviews(dbReviews);
+        }
+      } catch (err) {
+        console.error("Failed to load initial Firestore data stream:", err);
+      }
+    }
+    loadResources();
+  }, []);
+
+  // Firebase Auth Observer & profile syncer
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setIsLoggedIn(true);
+        setCurrentUser(user.email);
+        localStorage.setItem('canela_logged_in', 'true');
+        localStorage.setItem('canela_current_user', user.email || '');
+
+        // Fetch their database profile details
+        try {
+          const profile = await getUserProfile(user.uid);
+          if (profile) {
+            if (profile.favorites) setFavorites(profile.favorites);
+            if (profile.clubPoints !== undefined) setClubPoints(profile.clubPoints);
+            if (profile.triviaSolved !== undefined) {
+              setTriviaStatus(profile.triviaSolved ? 'correct' : 'unsolved');
+            }
+            if (profile.totebag) {
+              setToteBagStatus(profile.totebag === 'redeemed' ? 'redeemed' : 'locked');
+            }
+          } else {
+            // Seed a fresh profile for the user in the database
+            await saveUserProfile(user.uid, {
+              id: user.uid,
+              email: user.email || '',
+              clubPoints: 120,
+              triviaSolved: false,
+              favorites: [],
+              totebag: 'locked'
+            });
+          }
+        } catch (profileErr) {
+          console.error("Failed user profile fetch or sync:", profileErr);
+        }
+      } else {
+        setIsLoggedIn(false);
+        setCurrentUser(null);
+        localStorage.removeItem('canela_logged_in');
+        localStorage.removeItem('canela_current_user');
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   // Current translation active map
   const t = TRANSLATIONS[language];
@@ -1176,7 +1283,8 @@ export default function App() {
                     <button
                       id="profile-logout-btn"
                       type="button"
-                      onClick={() => {
+                      onClick={async () => {
+                        try { await signOut(auth); } catch (e) { console.error("SignOut error:", e); }
                         setIsLoggedIn(false);
                         setCurrentUser(null);
                         localStorage.removeItem('canela_logged_in');

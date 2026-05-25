@@ -1,0 +1,78 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Database representation of logged in users, tracking club points, favorites, and trivia status.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique user ID matching Firebase Auth UID." },
+        "email": { "type": "string", "description": "Email address of the user." },
+        "clubPoints": { "type": "integer", "description": "Accumulated Club Canela loyalty points." },
+        "triviaSolved": { "type": "boolean", "description": "Whether the daily trivia has been answered correctly today." },
+        "favorites": { "type": "array", "description": "List of favorite video IDs." },
+        "totebag": { "type": "string", "description": "Status of the free totebag promo." }
+      },
+      "required": ["id", "email"]
+    },
+    "Video": {
+      "title": "Video Content",
+      "description": "Cinematic and TV show assets, including classic movies, telenovelas, and series.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title_es": { "type": "string" },
+        "title_en": { "type": "string" },
+        "description_es": { "type": "string" },
+        "description_en": { "type": "string" },
+        "category": { "type": "string", "enum": ["movies", "series", "novelas", "sports", "kids"] },
+        "genre_es": { "type": "string" },
+        "genre_en": { "type": "string" },
+        "duration": { "type": "string" },
+        "poster_url": { "type": "string" },
+        "backdrop_url": { "type": "string" },
+        "streams": { "type": "array" },
+        "rating": { "type": "string" },
+        "year": { "type": "string" },
+        "isCustom": { "type": "boolean" },
+        "cast": { "type": "array" },
+        "subtitles": { "type": "array" },
+        "episodes": { "type": "array" },
+        "status": { "type": "string", "enum": ["published", "draft"] },
+        "isFeatured": { "type": "boolean" },
+        "isTrending": { "type": "boolean" },
+        "isPopular": { "type": "boolean" },
+        "director": { "type": "string" },
+        "country": { "type": "string" }
+      },
+      "required": ["id", "title_es", "title_en", "category"]
+    },
+    "UserReview": {
+      "title": "Video Reviews",
+      "description": "Viewer comments and star ratings for film library assets.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "video_id": { "type": "string" },
+        "user_email": { "type": "string" },
+        "rating": { "type": "integer" },
+        "comment": { "type": "string" },
+        "date": { "type": "string" }
+      },
+      "required": ["id", "video_id", "user_email", "rating", "comment", "date"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profile data."
+    },
+    "videos/{videoId}": {
+      "schema": "Video",
+      "description": "Metadata for streaming videos and series catalog."
+    },
+    "reviews/{reviewId}": {
+      "schema": "UserReview",
+      "description": "List of user comments and ratings for videos."
+    }
+  }
+}
