@@ -1419,21 +1419,6 @@ export default function App() {
         </div>
       )}
 
-      {/* ADMIN UPLOAD PANEL HOOD (Fades toggle on button press) */}
-      {isAdminOpen && isLoggedIn && (
-        <div className="px-4 py-3 bg-neutral-950/80 backdrop-blur border-b border-white/5 animate-fadeIn">
-          <UploadDashboard
-            language={language}
-            translations={t}
-            onAddVideo={handleAddVideo}
-            customVideos={customUploadedVideos}
-            onRemoveVideo={handleRemoveVideo}
-            videos={videos}
-            onUpdateVideo={handleUpdateVideo}
-          />
-        </div>
-      )}
-
       {/* INTEGRATED PERSISTENT CINEMATIC MEDIA PLAYER OVERLAY MODAL */}
       {isPlayerOpen && (
         <div className="fixed inset-0 z-[9999] bg-black flex flex-col md:flex-row justify-between animate-fadeIn select-none font-sans overflow-hidden">
@@ -2057,7 +2042,7 @@ export default function App() {
         PREMIUM CINEMATIC MULTI-SLIDESHOW HERO CAROUSEL 
         Only visible when no specific details video is selected
       */}
-      {searchQuery === '' && !selectedVideoForDetails && selectedCategory === 'all' && (() => {
+      {searchQuery === '' && !selectedVideoForDetails && selectedCategory === 'all' && !isAdminOpen && (() => {
         const premiumSlides = [
           {
             id: "v-ruptura",
@@ -2300,7 +2285,7 @@ export default function App() {
       })()}
 
       {/* FILTER SEARCH INFORMATION BADGE */}
-      {searchQuery && (
+      {searchQuery && !isAdminOpen && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
           <p className="text-sm text-gray-400 font-sans">
             {language === 'es' ? 'Resultados para la búsqueda:' : 'Search results for:'}{" "}
@@ -2310,7 +2295,7 @@ export default function App() {
       )}
 
       {/* FAVORITES BOOKMARKS ROW */}
-      {favorites.length > 0 && selectedCategory === 'all' && searchQuery === '' && !selectedVideoForDetails && (
+      {favorites.length > 0 && selectedCategory === 'all' && searchQuery === '' && !selectedVideoForDetails && !isAdminOpen && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 py-6 font-sans">
           <h3 className="text-base md:text-lg font-black mb-4 tracking-tight flex items-center gap-2 text-white">
             <Heart className="w-4 h-4 text-rose-500 fill-current" />
@@ -2355,8 +2340,21 @@ export default function App() {
 
       {/* MAIN SHELVES DISPLAY */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12">
-        
-        {/* VIEWPORTS ROUTER FOR SPECIFIC CATEGORY TABS OR SEARCH */}
+        {isAdminOpen && isLoggedIn ? (
+          <div className="animate-fadeIn min-h-[500px]">
+            <UploadDashboard
+              language={language}
+              translations={t}
+              onAddVideo={handleAddVideo}
+              customVideos={customUploadedVideos}
+              onRemoveVideo={handleRemoveVideo}
+              videos={videos}
+              onUpdateVideo={handleUpdateVideo}
+            />
+          </div>
+        ) : (
+          <>
+            {/* VIEWPORTS ROUTER FOR SPECIFIC CATEGORY TABS OR SEARCH */}
         {(selectedCategory !== 'all' || searchQuery !== '') && (
           <section className="space-y-6 animate-fadeIn pb-12">
             <div className="border-b border-white/5 pb-3">
@@ -2672,6 +2670,8 @@ export default function App() {
               {language === 'es' ? 'Prueba escribiendo otros términos o sube un video.' : 'Try typing other terms or upload a video.'}
             </p>
           </div>
+        )}
+          </>
         )}
       </main>
 

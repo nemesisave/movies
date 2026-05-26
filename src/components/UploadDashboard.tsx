@@ -3,9 +3,15 @@ import {
   Upload, Film, Trash2, Video as VideoIcon, Sparkles, Check, Info, 
   Edit3, Layers, PlusCircle, RefreshCw, Database, Star, TrendingUp, 
   Eye, EyeOff, Flame, Zap, Search, BookmarkCheck, ArrowUpRight,
-  Tv, Heart, Trophy, Smile
+  Tv, Heart, Trophy, Smile, User
 } from 'lucide-react';
-import { Video, Language, QualityStream, VideoSubtitles, Episode } from '../types';
+import { Video, Language, QualityStream, VideoSubtitles, Episode, UserReview } from '../types';
+import { 
+  fetchReviewsFromFirestore, 
+  deleteReviewFromFirestore, 
+  fetchAllUserProfilesFromFirestore, 
+  deleteUserProfileFromFirestore 
+} from '../lib/firebaseService';
 
 interface UploadDashboardProps {
   language: Language;
@@ -26,8 +32,66 @@ export default function UploadDashboard({
   videos,
   onUpdateVideo
 }: UploadDashboardProps) {
-  // Navigation inside Dashboard (add, edit, episodes, catalog)
-  const [activeTab, setActiveTab] = useState<'add' | 'edit' | 'episodes' | 'catalog'>('catalog'); // Starts on catalog list for instant control!
+  // Navigation inside Dashboard (add, edit, episodes, catalog, comments, users)
+  const [activeTab, setActiveTab] = useState<'add' | 'edit' | 'episodes' | 'catalog' | 'comments' | 'users'>('catalog'); // Starts on catalog list for instant control!
+
+  // Additional CMS States for registered users and comments management
+  const [dbReviews, setDbReviews] = useState<UserReview[]>([]);
+  const [dbUsers, setDbUsers] = useState<any[]>([]);
+  const [loadingComments, setLoadingComments] = useState(false);
+  const [loadingUsers, setLoadingUsers] = useState(false);
+
+  const loadComments = async () => {
+    setLoadingComments(true);
+    try {
+      const data = await fetchReviewsFromFirestore();
+      setDbReviews(data);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoadingComments(false);
+    }
+  };
+
+  const loadUsers = async () => {
+    setLoadingUsers(true);
+    try {
+      const data = await fetchAllUserProfilesFromFirestore();
+      setDbUsers(data);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoadingUsers(false);
+    }
+  };
+
+  const handleDeleteComment = async (id: string) => {
+    if (confirm(language === 'es' ? '¿Seguro que deseas eliminar este comentario permanentemente?' : 'Are you sure you want to delete this comment permanently?')) {
+      try {
+        await deleteReviewFromFirestore(id);
+        setDbReviews(prev => prev.filter(r => r.id !== id));
+        setNotification(language === 'es' ? '¡Comentario eliminado con éxito!' : 'Comment deleted successfully!');
+        setTimeout(() => setNotification(null), 3500);
+      } catch (err) {
+        console.error(err);
+        alert('Error deleting comment');
+      }
+    }
+  };
+
+  const handleDeleteUser = async (uid: string) => {
+    if (confirm(language === 'es' ? '¿Seguro que deseas eliminar este perfil de usuario de la base de datos de Canela?' : 'Are you sure you want to delete this user profile from the database?')) {
+      try {
+        await deleteUserProfileFromFirestore(uid);
+        setDbUsers(prev => prev.filter(u => u.id !== uid));
+        setNotification(language === 'es' ? '¡Usuario eliminado del registro!' : 'User profile removed!');
+        setTimeout(() => setNotification(null), 3500);
+      } catch (err) {
+        console.error(err);
+        alert('Error deleting user');
+      }
+    }
+  };
 
   // Form State for Adding / Editing Videos
   const [titleEs, setTitleEs] = useState('');
@@ -578,6 +642,24 @@ export default function UploadDashboard({
               <Layers className="w-3.5 h-3.5" />
               <span>{language === 'es' ? 'Episodios' : 'Episodes'}</span>
             </button>
+            <button
+              onClick={() => { setActiveTab('comments'); loadComments(); }}
+              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeTab === 'comments' ? 'bg-[#E50914] text-white shadow' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              <Smile className="w-3.5 h-3.5" />
+              <span>{language === 'es' ? 'Comentarios' : 'Comments'}</span>
+            </button>
+            <button
+              onClick={() => { setActiveTab('users'); loadUsers(); }}
+              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeTab === 'users' ? 'bg-[#E50914] text-white shadow' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              <User className="w-3.5 h-3.5" />
+              <span>{language === 'es' ? 'Usuarios' : 'Users'}</span>
+            </button>
           </div>
         </div>
       </div>
@@ -884,26 +966,26 @@ export default function UploadDashboard({
               />
             </div>
 
-            <div className="col-span-2 sm:col-span-1">
-              <label className="block text-[10px] font-bold text-gray-400 tracking-wider uppercase mb-1">{language === 'es' ? 'Fondo Banner' : 'Wide Banner URL'}</label>
+            <div className="col-span-2">
+              <label className="block text-[10px] font-bold text-gray-400 tracking-wider uppercase mb-1">
+                {language === 'es' ? 'URL de Imagen (Poster, Banner y Fondo)' : 'Image URL (Poster, Banner & Backdrop)'}
+              </label>
               <input
                 type="text"
-                placeholder="https://..."
-                value={backdropUrl}
-                onChange={(e) => setBackdropUrl(e.target.value)}
-                className="w-full bg-black border border-white/10 focus:border-[#E50914] rounded-lg px-2.5 py-1.5 text-xs outline-none transition-all text-white"
-              />
-            </div>
-
-            <div className="col-span-2 sm:col-span-1">
-              <label className="block text-[10px] font-bold text-gray-400 tracking-wider uppercase mb-1">{translations.posterUrl}</label>
-              <input
-                type="text"
-                placeholder="https://..."
+                placeholder="https://images.unsplash.com/..."
                 value={posterUrl}
-                onChange={(e) => setPosterUrl(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setPosterUrl(val);
+                  setBackdropUrl(val);
+                }}
                 className="w-full bg-black border border-white/10 focus:border-[#E50914] rounded-lg px-2.5 py-1.5 text-xs outline-none transition-all text-white"
               />
+              <p className="text-[9px] text-gray-500 mt-1 italic font-sans font-medium">
+                {language === 'es' 
+                  ? 'Esta dirección sirve simultáneamente como portada de catálogo vertical y fondo de banner horizontal.' 
+                  : 'This URL is used for both vertical covers and horizontal banner backdrops.'}
+              </p>
             </div>
           </div>
 
@@ -1096,37 +1178,28 @@ export default function UploadDashboard({
             {/* ONLINE STREAMS MULTIPLE QUALITY (Bitrates) FORM SENSOR */}
             {(sourceType === 'url' || activeTab === 'edit') && (
               <div className="space-y-4 font-sans text-xs">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-[10px] font-bold text-gray-400 tracking-wider uppercase mb-1">{translations.video1080p}</label>
-                    <input
-                      type="url"
-                      placeholder="https://example.com/movie_1080p.mp4"
-                      value={video1080}
-                      onChange={(e) => setVideo1080(e.target.value)}
-                      className="w-full bg-black border border-white/10 focus:border-[#E50914] rounded-lg px-2.5 py-1.5 text-xs outline-none transition-all text-white"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-gray-400 tracking-wider uppercase mb-1">{translations.video720p}</label>
-                    <input
-                      type="url"
-                      placeholder="https://example.com/movie_720p.mp4"
-                      value={video720}
-                      onChange={(e) => setVideo720(e.target.value)}
-                      className="w-full bg-black border border-white/10 focus:border-[#E50914] rounded-lg px-2.5 py-1.5 text-xs outline-none transition-all text-white"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-gray-400 tracking-wider uppercase mb-1">{translations.video480p}</label>
-                    <input
-                      type="url"
-                      placeholder="https://example.com/movie_480p.mp4"
-                      value={video480}
-                      onChange={(e) => setVideo480(e.target.value)}
-                      className="w-full bg-black border border-white/10 focus:border-[#E50914] rounded-lg px-2.5 py-1.5 text-xs outline-none transition-all text-white"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-400 tracking-wider uppercase mb-1">
+                    {language === 'es' ? 'Pegar URL del Video o Enlace Stream (Formatos mp4, m3u8, etc.)' : 'Paste Video URL or Stream Link (mp4, m3u8, etc.)'}
+                  </label>
+                  <input
+                    type="url"
+                    placeholder="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                    value={video1080}
+                    required={sourceType === 'url'}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setVideo1080(val);
+                      setVideo720(val);
+                      setVideo480(val);
+                    }}
+                    className="w-full bg-black border border-white/10 focus:border-[#E50914] rounded-lg px-3 py-2 text-xs outline-none transition-all text-white font-mono"
+                  />
+                  <p className="text-[10px] text-gray-500 mt-1 italic font-sans font-medium">
+                    {language === 'es' 
+                      ? 'Proporciona un enlace directo a un archivo de video válido para reproducirse en streaming.' 
+                      : 'Provide a direct link to a valid streaming file to play inside the player.'}
+                  </p>
                 </div>
               </div>
             )}
@@ -1878,8 +1951,179 @@ export default function UploadDashboard({
         </div>
       )}
 
+      {/* TAB 5: COMMENTS MODERATION PANEL */}
+      {activeTab === 'comments' && (
+        <div className="space-y-6 animate-fadeIn text-white">
+          <div className="bg-neutral-900 border border-white/5 p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <h3 className="text-sm font-bold text-gray-200">
+                {language === 'es' ? 'Gestión de Comentarios y Reseñas' : 'Comment & Review Moderation'}
+              </h3>
+              <p className="text-[10px] text-gray-400 mt-0.5">
+                {language === 'es' 
+                  ? 'Modera las opiniones, reseñas y calificaciones escritas por los usuarios en el catálogo de Canela.' 
+                  : 'Moderate opinions, feedback, and user ratings left across the movie catalog.'}
+              </p>
+            </div>
+            
+            <button
+              type="button"
+              onClick={loadComments}
+              disabled={loadingComments}
+              className="px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-xs text-white rounded-lg flex items-center gap-1.5 transition-all cursor-pointer font-bold disabled:opacity-50 font-sans"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${loadingComments ? 'animate-spin' : ''}`} />
+              <span>{language === 'es' ? 'Recargar' : 'Refresh'}</span>
+            </button>
+          </div>
+
+          {loadingComments ? (
+            <div className="py-16 text-center text-gray-500 text-xs animate-pulse">
+              {language === 'es' ? 'Obteniendo comentarios desde Firestore...' : 'Fetching user feedback from Firestore...'}
+            </div>
+          ) : dbReviews.length === 0 ? (
+            <div className="py-16 text-center border border-white/5 bg-black/40 rounded-xl text-gray-500 text-xs italic">
+              {language === 'es' 
+                ? 'No se encontraron comentarios guardados en Firestore. Escribe una reseña desde la ficha de alguna película.' 
+                : 'No comments found in database yet. Try writing a review first.'}
+            </div>
+          ) : (
+            <div className="border border-white/5 bg-black/40 rounded-2xl overflow-hidden divide-y divide-white/5 max-h-[500px] overflow-y-auto">
+              {dbReviews.map(rev => {
+                const associatedVid = videos.find(v => v.id === rev.video_id);
+                const vidTitle = associatedVid ? (language === 'es' ? associatedVid.title_es : associatedVid.title_en) : rev.video_id;
+
+                return (
+                  <div key={rev.id} className="p-4 bg-neutral-900/10 hover:bg-neutral-900/35 transition-all flex flex-col md:flex-row gap-4 items-start justify-between">
+                    <div className="space-y-1.5 flex-1 select-text">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-xs font-black text-gray-255">{rev.user_email}</span>
+                        <span className="text-[10px] text-gray-500">•</span>
+                        <span className="text-[10px] font-bold text-[#E50914] bg-[#E50914]/10 px-2 py-0.5 rounded border border-[#E50914]/20 truncate max-w-[200px]" title={vidTitle}>
+                          {vidTitle}
+                        </span>
+                        <span className="text-[10px] text-gray-500">•</span>
+                        <span className="text-[10px] text-gray-400 font-mono">{rev.date}</span>
+                      </div>
+                      
+                      {/* Rating visual estrellas */}
+                      <div className="flex items-center gap-0.5 text-yellow-500">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Star 
+                            key={i} 
+                            className={`w-3.5 h-3.5 ${i < (rev.rating || 5) ? 'fill-current' : 'opacity-20 text-gray-600'}`} 
+                          />
+                        ))}
+                      </div>
+
+                      <p className="text-xs text-gray-300 leading-relaxed pt-1 select-text">
+                        "{rev.comment}"
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteComment(rev.id)}
+                      className="px-2.5 py-1.5 bg-red-950/20 hover:bg-red-500 hover:text-white border border-red-500/20 text-red-500 rounded-lg text-[10px] font-black tracking-wide uppercase transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span>{language === 'es' ? 'Eliminar' : 'Delete'}</span>
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* TAB 6: REGISTERED SYSTEM USERS */}
+      {activeTab === 'users' && (
+        <div className="space-y-6 animate-fadeIn">
+          <div className="bg-neutral-900 border border-white/5 p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <h3 className="text-sm font-bold text-gray-200">
+                {language === 'es' ? 'Directorio de Usuarios Registrados' : 'Registered Users Directory'}
+              </h3>
+              <p className="text-[10px] text-gray-400 mt-0.5">
+                {language === 'es' 
+                  ? 'Ver los perfiles registrados en canela, puntos acumulados de recompensa (Puntos Club), y favoritos.' 
+                  : 'Browse user metadata profiles, Canela point systems, and viewing favorites.'}
+              </p>
+            </div>
+            
+            <button
+              type="button"
+              onClick={loadUsers}
+              disabled={loadingUsers}
+              className="px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-xs text-white rounded-lg flex items-center gap-1.5 transition-all cursor-pointer font-bold disabled:opacity-50 font-sans"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${loadingUsers ? 'animate-spin' : ''}`} />
+              <span>{language === 'es' ? 'Recargar' : 'Refresh'}</span>
+            </button>
+          </div>
+
+          {loadingUsers ? (
+            <div className="py-16 text-center text-gray-500 text-xs animate-pulse">
+              {language === 'es' ? 'Cargando usuarios desde Firestore...' : 'Loading accounts from Firestore...'}
+            </div>
+          ) : dbUsers.length === 0 ? (
+            <div className="py-16 text-center border border-white/5 bg-black/40 rounded-xl text-gray-500 text-xs italic">
+              {language === 'es' ? 'No se encontraron registros de perfiles de usuario en Firestore.' : 'No user registry documents found.'}
+            </div>
+          ) : (
+            <div className="border border-white/5 bg-black/40 rounded-2xl overflow-hidden divide-y divide-white/5 max-h-[500px] overflow-y-auto">
+              {dbUsers.map(u => (
+                <div key={u.id} className="p-4 bg-neutral-900/10 hover:bg-neutral-900/35 transition-all flex flex-col md:flex-row gap-4 items-center justify-between">
+                  {/* Left layout details */}
+                  <div className="flex gap-3 items-center w-full md:w-auto min-w-0 select-text">
+                    <div className="w-8 h-8 rounded-full bg-neutral-800 border border-white/15 flex items-center justify-center text-[#E50914] font-black shrink-0 text-xs uppercase shadow select-none font-mono">
+                      {u.email ? u.email[0].toUpperCase() : '?'}
+                    </div>
+                    <div className="min-w-0 text-left">
+                      <h4 className="font-extrabold text-gray-100 flex items-center gap-2 truncate text-xs">
+                        <span className="truncate">{u.email}</span>
+                        {u.email?.includes('admin') && (
+                          <span className="bg-amber-400 text-black text-[8px] font-sans font-black uppercase px-1.5 py-px rounded tracking-wider select-none shrink-0 font-mono">
+                            SYSTEM ADMIN
+                          </span>
+                        )}
+                      </h4>
+                      <p className="text-[10px] text-gray-300 flex flex-wrap items-center gap-x-2 gap-y-1 select-none font-sans font-medium mt-0.5">
+                        <span className="text-yellow-400 font-bold bg-yellow-405/10 border border-yellow-450/20 px-1.5 rounded py-0.2">
+                          🏆 {u.clubPoints || 0} {language === 'es' ? 'Puntos Club' : 'Points'}
+                        </span>
+                        <span>•</span>
+                        <span>
+                          Trivia: {u.triviaSolved ? (language === 'es' ? '✅ Resuelta' : '✅ Solved') : (language === 'es' ? '❌ Pendiente' : '❌ Uncompleted')}
+                        </span>
+                        <span>•</span>
+                        <span>
+                          ❤️ {u.favorites?.length || 0} {language === 'es' ? 'Favoritos' : 'My List'}
+                        </span>
+                      </p>
+                      <p className="text-[9px] text-gray-500 font-mono mt-0.5 select-all">UID: {u.id}</p>
+                    </div>
+                  </div>
+
+                  {/* Right delete user control */}
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteUser(u.id)}
+                    className="px-2.5 py-1.5 bg-red-950/20 hover:bg-red-500 hover:text-white border border-red-500/20 text-red-500 rounded-lg text-[10px] font-black tracking-wide uppercase transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>{language === 'es' ? 'Eliminar perfil' : 'Delete user'}</span>
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* FOOTER CUSTOM UPLOADS LIST */}
-      {activeTab !== 'episodes' && activeTab !== 'catalog' && (
+      {activeTab !== 'episodes' && activeTab !== 'catalog' && activeTab !== 'comments' && activeTab !== 'users' && (
         <div className="mt-8 pt-6 border-t border-white/10">
           <h3 className="text-sm font-bold mb-3 tracking-wide flex items-center gap-2 select-none">
             <span>{translations.customUploads}</span>

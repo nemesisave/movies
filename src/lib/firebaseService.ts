@@ -149,3 +149,32 @@ export async function saveUserProfile(userId: string, data: UserProfileData): Pr
     handleFirestoreError(error, OperationType.WRITE, `${USERS_COL}/${userId}`);
   }
 }
+
+/**
+ * Fetches all registered user profiles from Firestore
+ */
+export async function fetchAllUserProfilesFromFirestore(): Promise<UserProfileData[]> {
+  try {
+    const list: UserProfileData[] = [];
+    const querySnapshot = await getDocs(collection(db, USERS_COL));
+    querySnapshot.forEach((docSnap) => {
+      list.push(docSnap.data() as UserProfileData);
+    });
+    return list;
+  } catch (error) {
+    // Fail silently or log error for local fallback
+    console.error("Listing user profiles error:", error);
+    return [];
+  }
+}
+
+/**
+ * Deletes a user profile document from Firestore
+ */
+export async function deleteUserProfileFromFirestore(userId: string): Promise<void> {
+  try {
+    await deleteDoc(doc(db, USERS_COL, userId));
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, `${USERS_COL}/${userId}`);
+  }
+}
