@@ -609,38 +609,11 @@ export default function UploadDashboard({
             <button
               onClick={() => setActiveTab('catalog')}
               className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
-                activeTab === 'catalog' ? 'bg-[#E50914] text-white shadow' : 'text-gray-400 hover:text-white'
+                activeTab === 'catalog' || activeTab === 'add' || activeTab === 'edit' || activeTab === 'episodes' ? 'bg-[#E50914] text-white shadow' : 'text-gray-400 hover:text-white'
               }`}
             >
               <Database className="w-3.5 h-3.5" />
               <span>{language === 'es' ? 'Catálogo' : 'Catalog'}</span>
-            </button>
-            <button
-              onClick={() => { setActiveTab('add'); handleResetForm(); }}
-              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
-                activeTab === 'add' ? 'bg-[#E50914] text-white shadow' : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              <PlusCircle className="w-3.5 h-3.5" />
-              <span>{language === 'es' ? 'Agregar' : 'New Video'}</span>
-            </button>
-            <button
-              onClick={() => { setActiveTab('edit'); if (videos.length > 0) handleLoadVideoForEditing(videos[0].id); }}
-              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
-                activeTab === 'edit' ? 'bg-[#E50914] text-white shadow' : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              <Edit3 className="w-3.5 h-3.5" />
-              <span>{language === 'es' ? 'Editar' : 'Edit Existing'}</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('episodes')}
-              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
-                activeTab === 'episodes' ? 'bg-[#E50914] text-white shadow' : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              <Layers className="w-3.5 h-3.5" />
-              <span>{language === 'es' ? 'Episodios' : 'Episodes'}</span>
             </button>
             <button
               onClick={() => { setActiveTab('comments'); loadComments(); }}
@@ -715,6 +688,33 @@ export default function UploadDashboard({
         <div className="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs md:text-sm font-semibold rounded-xl flex items-center gap-2.5 animate-pulse">
           <Check className="w-5 h-5 shrink-0" />
           <span>{notification}</span>
+        </div>
+      )}
+
+      {/* Return to Catalog navigation if in Add, Edit, or Episodes view */}
+      {(activeTab === 'add' || activeTab === 'edit' || activeTab === 'episodes') && (
+        <div className="mb-6 flex flex-col sm:flex-row items-center justify-between bg-[#14151a] border border-white/5 p-4 rounded-xl gap-3">
+          <div className="flex items-center gap-2.5">
+            <span className="p-1.5 rounded-lg bg-red-600/20 border border-red-500/30 text-[10px] font-mono font-black tracking-widest uppercase text-[#E50914] shrink-0">
+              {activeTab === 'add' && (language === 'es' ? 'NUEVO TITULO' : 'NEW SCRIPT')}
+              {activeTab === 'edit' && (language === 'es' ? 'EDICIÓN VIDEO' : 'LIVE EDIT')}
+              {activeTab === 'episodes' && (language === 'es' ? 'TEMPORADAS' : 'SEASONS')}
+            </span>
+            <div className="min-w-0">
+              <span className="text-xs text-gray-200 font-bold block">
+                {activeTab === 'add' && (language === 'es' ? 'Formulario: Agregar nuevo título al catálogo' : 'Form: Add new catalog title')}
+                {activeTab === 'edit' && (language === 'es' ? 'Formulario: Editando información y URLs de reproducción' : 'Form: Updating media manifest details')}
+                {activeTab === 'episodes' && (language === 'es' ? 'Gestión: Configurando capítulos para la serie' : 'Management: Configuring episodes and seasons')}
+              </span>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setActiveTab('catalog')}
+            className="px-4 py-1.5 bg-neutral-800 hover:bg-[#E50914] text-xs font-black text-white rounded-lg transition-all cursor-pointer flex items-center gap-1.5 border border-white/10 shrink-0 shadow-lg"
+          >
+            <span>← {language === 'es' ? 'Volver al Catálogo' : 'Back to Catalog'}</span>
+          </button>
         </div>
       )}
 
@@ -1726,23 +1726,35 @@ export default function UploadDashboard({
               </select>
             </div>
 
-            {/* Reset Defaults Database button */}
-            <button
-              type="button"
-              onClick={() => {
-                if (confirm(language === 'es' 
-                  ? '¿Quieres restablecer la biblioteca de Canela a los títulos originales predeterminados de fábrica? Esto eliminará tus cargas.' 
-                  : 'Do you want to reset the entire Canela library back to factory defaults? Your custom uploads will be cleared.')) {
-                  localStorage.removeItem('canela_videos');
-                  localStorage.removeItem('canela_reviews');
-                  window.location.reload();
-                }
-              }}
-              className="p-1.5 border border-dashed border-red-500/30 hover:border-red-500 rounded-lg text-[10px] text-red-500 font-extrabold hover:bg-red-500/10 transition-all flex items-center gap-1 cursor-pointer shrink-0 font-sans"
-            >
-              <RefreshCw className="w-3.5 h-3.5 text-red-500 font-bold" />
-              <span>{language === 'es' ? 'Recuperar Catálogo Original' : 'Reset Defaults'}</span>
-            </button>
+            <div className="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end">
+              {/* CTA to ADD a new item in-place */}
+              <button
+                type="button"
+                onClick={() => { setActiveTab('add'); handleResetForm(); }}
+                className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-xs font-black text-white rounded-lg transition-all cursor-pointer flex items-center gap-1.5 shrink-0 shadow-md shadow-emerald-950/20"
+              >
+                <PlusCircle className="w-4 h-4 shrink-0" />
+                <span>{language === 'es' ? 'Agregar Película / Serie' : 'Add Movie / Series'}</span>
+              </button>
+
+              {/* Reset Defaults Database button */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (confirm(language === 'es' 
+                    ? '¿Quieres restablecer la biblioteca de Canela a los títulos originales predeterminados de fábrica? Esto eliminará tus cargas.' 
+                    : 'Do you want to reset the entire Canela library back to factory defaults? Your custom uploads will be cleared.')) {
+                    localStorage.removeItem('canela_videos');
+                    localStorage.removeItem('canela_reviews');
+                    window.location.reload();
+                  }
+                }}
+                className="p-1.5 border border-dashed border-red-500/30 hover:border-red-500 rounded-lg text-[10px] text-red-500 font-extrabold hover:bg-red-500/10 transition-all flex items-center gap-1 cursor-pointer shrink-0 font-sans"
+              >
+                <RefreshCw className="w-3.5 h-3.5 text-red-500" />
+                <span>{language === 'es' ? 'Fábrica' : 'Reset Defaults'}</span>
+              </button>
+            </div>
           </div>
 
           {/* Table list of database items */}
@@ -1908,6 +1920,22 @@ export default function UploadDashboard({
 
                       {/* Right Detail Operations */}
                       <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
+                        {/* Episodes management - only for show types (series/novelas) */}
+                        {(vid.category === 'series' || vid.category === 'novelas') && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSelectedSeriesId(vid.id);
+                              setActiveTab('episodes');
+                            }}
+                            className="px-2.5 py-1 bg-neutral-800 hover:bg-red-600 text-[10px] font-black text-gray-250 hover:text-white rounded transition-all cursor-pointer flex items-center gap-1 shadow-sm group"
+                            title={language === 'es' ? 'Gestionar episodios de esta serie' : 'Manage show episodes'}
+                          >
+                            <Layers className="w-3 h-3 text-red-500 group-hover:text-white" />
+                            <span>{language === 'es' ? 'Episodios' : 'Episodes'}</span>
+                          </button>
+                        )}
+
                         {/* Edit metadata */}
                         <button
                           type="button"
@@ -1918,7 +1946,7 @@ export default function UploadDashboard({
                           className="px-2.5 py-1 bg-neutral-800 hover:bg-yellow-500 text-[10px] font-bold text-gray-200 hover:text-neutral-950 rounded transition-all cursor-pointer flex items-center gap-0.5 shadow-sm"
                           title="Load Info into Edit Template Tab"
                         >
-                          <Edit3 className="w-3 h-3" />
+                          <Edit3 className="w-3 h-3 text-yellow-500" />
                           <span>{language === 'es' ? 'Editar' : 'Edit'}</span>
                         </button>
 

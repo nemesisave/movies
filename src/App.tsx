@@ -68,93 +68,39 @@ const MOCK_CHAT_POOL = [
 // 8 Retro Golden Era Cinema Classics matching TV screenshot
 export const RECIEN_AGREGADO_CLASSICS = [
   {
-    id: "v-tu-y-las-nubes",
-    title_es: "Tú y las nubes",
-    title_en: "Tú y las nubes",
-    description_es: "Clásica historia de enredos amorosos, picardía y canciones inolvidables de la Época de Oro con Lola Flores y Miguel Aceves Mejía.",
-    description_en: "Clásica historia de enredos amorosos, picardía y canciones inolvidables de la Época de Oro con Lola Flores y Miguel Aceves Mejía.",
+    id: "v-cada-noche-un-amor",
+    title_es: "Cada noche un amor",
+    title_en: "Cada noche un amor",
+    description_es: "La legendaria Sara Montiel protagoniza un tierno romance musical con nostálgicas melodías y fascinantes interpretaciones.",
+    description_en: "The legendary Sara Montiel stars in a tender musical romance filled with nostalgic melodies.",
     category: "movies",
-    genre_es: "Classic, Drama, Musical",
-    genre_en: "Classic, Drama, Musical",
-    duration: "1h 40m",
-    poster_url: "/src/assets/images/tu_y_las_nubes_poster_1779730297599.png",
+    genre_es: "Classic, Romance, Musical",
+    genre_en: "Classic, Romance, Musical",
+    duration: "1h 38m",
+    poster_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600",
     backdrop_url: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1600",
     rating: "TV-PG",
-    year: "1955",
-    cast: ["Lola Flores", "Miguel Aceves Mejía", "Tony Aguilar"],
-    director: "Miguel Zacarías",
+    year: "1958",
+    cast: ["Sara Montiel", "Christian Duvaleix"],
+    director: "Ernesto Cortázar",
     country: "Mexico"
   },
   {
-    id: "v-rancho-grande",
-    title_es: "Allá en el Rancho Grande",
-    title_en: "Allá en el Rancho Grande",
-    description_es: "La comedia de charros y canciones más icónica que puso en marcha la Época de Oro del Cine Mexicano, protagonizada por Jorge Negrete.",
-    description_en: "The highly iconic charro comedy and songs that kicked off the Golden Era of Mexican Cinema, starring Jorge Negrete.",
+    id: "v-un-divorcio",
+    title_es: "Un Divorcio",
+    title_en: "Un Divorcio",
+    description_es: "Un drama sobre un matrimonio en crisis morales y de fe ante el inminente divorcio en la sociedad mexicana de época de oro.",
+    description_en: "A drama about a marriage in moral crisis facing divorce in traditional Mexican golden era society.",
     category: "movies",
-    genre_es: "Classic, Comedia, Drama",
-    genre_en: "Classic, Comedy, Drama",
-    duration: "1h 35m",
-    poster_url: "/src/assets/images/alla_en_el_rancho_grande_poster_1779730319187.png",
-    backdrop_url: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=1600",
-    rating: "TV-PG",
-    year: "1936",
-    cast: ["Jorge Negrete", "Tito Guízar", "Esther Fernández"],
-    director: "Fernando de Fuentes",
-    country: "Mexico"
-  },
-  {
-    id: "v-dos-tipos-cuidado",
-    title_es: "Dos Tipos de Cuidado",
-    title_en: "Dos Tipos de Cuidado",
-    description_es: "Dos amigos inseparables se convierten en rivales por un malentendido de honor en la comedia ranchera mexicana más gloriosa de todos los tiempos.",
-    description_en: "Two inseparable friends become rivals over an honor misunderstanding in the most glorious Mexican ranch comedy of all time.",
-    category: "movies",
-    genre_es: "Classic, Comedia, Musical",
-    genre_en: "Classic, Comedy, Musical",
-    duration: "1h 50m",
-    poster_url: "/src/assets/images/dos_tipos_de_cuidado_poster_1779730334542.png",
-    backdrop_url: "https://images.unsplash.com/photo-1544698310-74ea9d1c8258?q=80&w=1600",
-    rating: "TV-PG",
-    year: "1953",
-    cast: ["Pedro Infante", "Jorge Negrete", "Carmelita González"],
-    director: "Ismael Rodríguez",
-    country: "Mexico"
-  },
-  {
-    id: "v-las-mananitas",
-    title_es: "Las Mañanitas",
-    title_en: "Las Mañanitas",
-    description_es: "Aventuras pícaras y amorosas de la época clásica rural, marcadas por hermosas serenatas y el carisma insustituible de Pedro Infante.",
-    description_en: "Mischievous and loving adventures of the rural classical era, marked by beautiful serenades and the irreplaceable charisma of Pedro Infante.",
-    category: "movies",
-    genre_es: "Classic, Drama, Musical",
-    genre_en: "Classic, Drama, Musical",
-    duration: "1h 30m",
-    poster_url: "/src/assets/images/las_mananitas_poster_1779730349256.png",
-    backdrop_url: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=1600",
-    rating: "TV-PG",
-    year: "1948",
-    cast: ["Pedro Infante", "Lupita Torrentera", "Andrés Soler"],
-    director: "Joaquín Pardavé",
-    country: "Mexico"
-  },
-  {
-    id: "v-cartas-marcadas",
-    title_es: "Carta Marcadas",
-    title_en: "Cartas Marcadas",
-    description_es: "Pedro Infante y Marga López protagonizan una emotiva historia de promesas, secretos familiares y cartas de amor perdidas en el tiempo.",
-    description_en: "Pedro Infante and Marga Lopez star in an emotional story of promises, family secrets, and love letters lost in time.",
-    category: "movies",
-    genre_es: "Classic, Drama, Romance",
-    genre_en: "Classic, Drama, Romance",
-    duration: "1h 42m",
+    genre_es: "Classic, Drama",
+    genre_en: "Classic, Drama",
+    duration: "1h 40m",
     poster_url: "/src/assets/images/cartas_marcadas_poster_1779730364368.png",
     backdrop_url: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1600",
-    rating: "TV-PG",
-    year: "1948",
-    cast: ["Pedro Infante", "Marga López", "Elda Peralta"],
-    director: "Miguel Zacarías",
+    rating: "PG",
+    year: "1953",
+    cast: ["Arturo de Córdova", "Marga López", "Elda Peralta"],
+    director: "Emilio Gómez Muriel",
     country: "Mexico"
   },
   {
@@ -176,11 +122,83 @@ export const RECIEN_AGREGADO_CLASSICS = [
     country: "Mexico"
   },
   {
-    id: "v-cartas-ufemia",
-    title_es: "Cartas a Ufemia",
-    title_en: "Cartas a Ufemia",
-    description_es: "Las desternillantes misivas y serenatas enviadas a una hermosa mujer causan estragos cómicos en un pequeño pueblo de México.",
-    description_en: "The hilarious love letters and serenades sent to a beautiful woman cause comedic havoc in a small Mexican town.",
+    id: "v-no-basta-ser-charro",
+    title_es: "No basta ser charro",
+    title_en: "No basta ser charro",
+    description_es: "La comedia ranchera de Jorge Negrete interpretando un carismático doble papel lleno de grandes canciones campiranas.",
+    description_en: "Jorge Negrete stars in a charismatic double role ranch comedy filled with beautiful songs.",
+    category: "movies",
+    genre_es: "Classic, Comedia, Musical",
+    genre_en: "Classic, Comedy, Musical",
+    duration: "1h 45m",
+    poster_url: "/src/assets/images/dos_tipos_de_cuidado_poster_1779730334542.png",
+    backdrop_url: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=1600",
+    rating: "TV-PG",
+    year: "1946",
+    cast: ["Jorge Negrete", "Lilia Michel", "Eulalio González Piporro"],
+    director: "Juan Bustillo Oro",
+    country: "Mexico"
+  },
+  {
+    id: "v-sandro-embrujo-amor",
+    title_es: "Sandro: Embrujo de amor",
+    title_en: "Sandro: Embrujo de amor",
+    description_es: "El gran Sandro canta ante una apasionante intriga gitana rodeado de baladas y ferviente romance argentino.",
+    description_en: "The great singer Sandro performs in an engaging romantic plot surrounded by beautiful classic ballads.",
+    category: "movies",
+    genre_es: "Classic, Musical, Romance",
+    genre_en: "Classic, Musical, Romance",
+    duration: "1h 35m",
+    poster_url: "/src/assets/images/cuando_quiere_un_mexicano_poster_1779730444622.png",
+    backdrop_url: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=1600",
+    rating: "TV-PG",
+    year: "1971",
+    cast: ["Sandro", "Carmen Sevilla"],
+    director: "Leo Fleider",
+    country: "Argentina"
+  },
+  {
+    id: "v-la-diosa-arrodillada",
+    title_es: "La diosa arrodillada",
+    title_en: "La diosa arrodillada",
+    description_es: "María Félix e inolvidable reparto en una obra de romance trágico y pasiones extremas en el cine clásico.",
+    description_en: "María Félix stars in a masterpiece of tragic romance and extreme passion in golden-era classic cinema.",
+    category: "movies",
+    genre_es: "Classic, Drama, Romance",
+    genre_en: "Classic, Drama, Romance",
+    duration: "1h 47m",
+    poster_url: "/src/assets/images/las_mananitas_poster_1779730349256.png",
+    backdrop_url: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=1600",
+    rating: "TV-PG",
+    year: "1947",
+    cast: ["María Félix", "Arturo de Córdova"],
+    director: "Roberto Gavaldón",
+    country: "Mexico"
+  },
+  {
+    id: "v-primera-comunion",
+    title_es: "Primera comunión",
+    title_en: "Primera comunión",
+    description_es: "El tierno y emotivo viaje de iniciación de un niño en la provincia de la época clásica rural mexicana.",
+    description_en: "An emotional and heartwarming journey of a young boy in rural classic Mexico.",
+    category: "movies",
+    genre_es: "Classic, Drama, Familiar",
+    genre_en: "Classic, Drama, Family",
+    duration: "1h 30m",
+    poster_url: "/src/assets/images/solo_veracruz_es_bello_poster_1779730411705.png",
+    backdrop_url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600",
+    rating: "TV-PG",
+    year: "1969",
+    cast: ["Juliancito Bravo", "David Reynoso"],
+    director: "Alfredo B. Crevenna",
+    country: "Mexico"
+  },
+  {
+    id: "v-las-hijas-del-amapolo",
+    title_es: "Las hijas del Amapolo",
+    title_en: "Las hijas del Amapolo",
+    description_es: "Un alegre charro intenta educar a sus audaces hijas con divertidas serenatas y cómicos pretendientes jaliscienses.",
+    description_en: "A cheerful charro raises his bold daughters with fun music, mariachi, and comedic suitors.",
     category: "movies",
     genre_es: "Classic, Comedia, Musical",
     genre_en: "Classic, Comedy, Musical",
@@ -188,211 +206,229 @@ export const RECIEN_AGREGADO_CLASSICS = [
     poster_url: "/src/assets/images/cartas_a_ufemia_poster_1779730398533.png",
     backdrop_url: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=1600",
     rating: "TV-PG",
-    year: "1952",
-    cast: ["Miguel Aceves Mejía", "Delia Casanova", "Víctor Alcocer"],
-    director: "Zacarías Gómez",
+    year: "1960",
+    cast: ["José Alfredo Jiménez", "Lola Beltrán"],
+    director: "Gilberto Martínez Solares",
     country: "Mexico"
   },
   {
-    id: "v-solo-veracruz",
-    title_es: "Solo Veracruz es Bello",
-    title_en: "Solo Veracruz es Bello",
-    description_es: "Un radiante homenaje musical lleno de jaranas, sol de costa y picardía jarocha en los bellos parajes del Veracruz de antaño.",
-    description_en: "A radiant musical tribute full of local jarana music, beach sun, and jarocho charm in old Veracruz.",
+    id: "v-esperame-en-siberia-vida-mia",
+    title_es: "Espérame en Siberia, vida mía",
+    title_en: "Espérame en Siberia, vida mía",
+    description_es: "Divertidísima comedia de enredos y situaciones absurdas con el galán de época Mauricio Garcés.",
+    description_en: "A hilarious vintage comedy of misunderstandings starring the comedic icon Mauricio Garcés.",
     category: "movies",
-    genre_es: "Classic, Musical, Comedia",
-    genre_en: "Classic, Musical, Comedy",
-    duration: "1h 30m",
-    poster_url: "/src/assets/images/solo_veracruz_es_bello_poster_1779730411705.png",
-    backdrop_url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600",
-    rating: "TV-PG",
-    year: "1961",
-    cast: ["Rosita Quintana", "Manuel Capetillo", "Queta Garay"],
-    director: "Roselio Gómez",
-    country: "Mexico"
-  },
-  {
-    id: "v-ahi-viene-martin-corona",
-    title_es: "Ahí Viene Martín Corona",
-    title_en: "Ahí Viene Martín Corona",
-    description_es: "Pedro Infante da vida al legendario vaquero justiciero Martín Corona, enfrentado a las injusticias de los malhechores del norte mexicano.",
-    description_en: "Pedro Infante brings to life the legendary cowboy outlaw Martín Corona, fighting against the lawless bands of Northern Mexico.",
-    category: "movies",
-    genre_es: "Classic, Action, Drama",
-    genre_en: "Classic, Action, Drama",
-    duration: "1h 35m",
-    poster_url: "/src/assets/images/ahi_viene_martin_corona_poster_1779730427836.png",
+    genre_es: "Classic, Comedia",
+    genre_en: "Classic, Comedy",
+    duration: "1h 40m",
+    poster_url: "/src/assets/images/tu_y_las_nubes_poster_1779730297599.png",
     backdrop_url: "https://images.unsplash.com/photo-1485642234645-a62644f84728?q=80&w=1600",
     rating: "TV-PG",
-    year: "1952",
-    cast: ["Pedro Infante", "Sara Montiel", "Eulalio González Piporro"],
-    director: "Miguel Zacarías",
+    year: "1971",
+    cast: ["Mauricio Garcés", "Zulma Faiad"],
+    director: "René Cardona Jr.",
     country: "Mexico"
   },
   {
-    id: "v-cuando-quiere-un-mexicano",
-    title_es: "Cuando Quiere un Mexicano",
-    title_en: "Cuando Quiere un Mexicano",
-    description_es: "El amor florece entre cantares y malentendidos rancheros de la mano de Jorge Negrete en su plenitud como el supremo charro cantor.",
-    description_en: "Love blossoms between beautiful ranch songs and comedy sketch entanglements featuring Jorge Negrete as the singer charro.",
+    id: "v-las-locuras-de-tin-tan",
+    title_es: "Las locuras de Tin-Tan",
+    title_en: "Las locuras de Tin-Tan",
+    description_es: "El genio pachuco Germán Valdés Tin-Tan desata un torbellino de risas y fabulosos bailes en esta comedia de enredos de colección.",
+    description_en: "Great comedian Germán Valdés Tin-Tan unleashes a whirlwind of laughter and dances in this vintage showcase comedy.",
     category: "movies",
-    genre_es: "Classic, Romance, Musical",
-    genre_en: "Classic, Romance, Musical",
+    genre_es: "Classic, Comedia, Musical",
+    genre_en: "Classic, Comedy, Musical",
     duration: "1h 30m",
-    poster_url: "/src/assets/images/cuando_quiere_un_mexicano_poster_1779730444622.png",
+    poster_url: "/src/assets/images/ahi_viene_martin_corona_poster_1779730427836.png",
     backdrop_url: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=1600",
     rating: "TV-PG",
-    year: "1944",
-    cast: ["Jorge Negrete", "Amanda Ledesma", "Enrique Herrera"],
-    director: "Juan Bustillo Oro",
+    year: "1952",
+    cast: ["Germán Valdés Tin Tan", "Yolanda Varela"],
+    director: "Gilberto Martínez Solares",
     country: "Mexico"
   }
 ];
 
 export const RECIEN_AGREGADO_NOVELAS = [
   {
-    id: "v-juana-la-virgen",
-    title_es: "Juana la Virgen",
-    title_en: "Juana la Virgen",
-    description_es: "Juana es una joven virgen de diecisiete años que queda embarazada por un error médico de inseminación artificial.",
-    description_en: "Juana is a seventeen-year-old virgin who gets pregnant due to a medical artificial insemination error.",
+    id: "v-ego",
+    title_es: "EGO",
+    title_en: "EGO",
+    description_es: "Erkeğe Güven Olmaz. Sibel es una exitosa empresaria cuyo destino se cruza con Erhan en un acuerdo desesperado que cambiará sus vidas.",
+    description_en: "Erkeğe Güven Olmaz. Sibel is a successful businesswoman whose destiny crosses paths with Erhan in a desperate agreement.",
     category: "novelas",
-    genre_es: "Novela, Drama, Romance",
-    genre_en: "Soap Opera, Drama, Romance",
+    genre_es: "Drama, Romance",
+    genre_en: "Drama, Romance",
     duration: "1 Temporada",
-    poster_url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=400",
-    backdrop_url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1600",
-    rating: "TV-14",
-    year: "2002",
-    cast: ["Daniela Alvarado", "Ricardo Álamo", "Roxana Díaz"],
-    director: "Tony Rodríguez",
-    country: "Venezuela"
-  },
-  {
-    id: "v-gorda-bella",
-    title_es: "Mi Gorda Bella",
-    title_en: "Mi Gorda Bella",
-    description_es: "Valentina es una joven dulce y con sobrepeso que hereda una inmensa fortuna, pero debe luchar contra la codicia de su propia tía.",
-    description_en: "Valentina is a sweet, overweight young woman who inherits a fortune, but must fight against her greedy aunt.",
-    category: "novelas",
-    genre_es: "Novela, Drama, Comedia",
-    genre_en: "Soap Opera, Drama, Comedy",
-    duration: "1 Temporada",
-    poster_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400",
-    backdrop_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1600",
-    rating: "TV-14",
-    year: "2002",
-    cast: ["Natalia Streignard", "Juan Pablo Raba", "Hilda Abrahamz"],
-    director: "José Alcalde",
-    country: "Venezuela"
-  },
-  {
-    id: "v-la-revancha",
-    title_es: "La Revancha",
-    title_en: "La Revancha",
-    description_es: "Dos hermanas separadas al nacer buscan justicia por la muerte de su padre, sin saber que el destino las unirá por el amor de un mismo hombre.",
-    description_en: "Two sisters separated at birth seek justice for their father's death, unaware that destiny will unite them in love with the same man.",
-    category: "novelas",
-    genre_es: "Novela, Drama, Acción",
-    genre_en: "Soap Opera, Drama, Action",
-    duration: "1 Temporada",
-    poster_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400",
-    backdrop_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1600",
-    rating: "TV-14",
-    year: "2000",
-    cast: ["Danna García", "Jorge Reyes", "Marcelo Cezán"],
-    director: "Yaky Ortega",
-    country: "Venezuela"
-  },
-  {
-    id: "v-vivir-destiempo",
-    title_es: "Vivir a Destiempo",
-    title_en: "Vivir a Destiempo",
-    description_es: "Paula ha vivido sometida a un matrimonio frío, pero el reencuentro con su primer amor reavivará la pasión y el anhelo de libertad.",
-    description_en: "Paula has lived subjected to a cold marriage, but the reunion with her first love will revive passion and the desire for freedom.",
-    category: "novelas",
-    genre_es: "Novela, Drama",
-    genre_en: "Soap Opera, Drama",
-    duration: "1 Temporada",
-    poster_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400",
+    poster_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600",
     backdrop_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1600",
     rating: "TV-14",
-    year: "2013",
-    cast: ["Edith González", "Ramiro Fumazoni", "Humberto Zurita"],
-    director: "Mauricio Meneses",
-    country: "Mexico"
-  },
-  {
-    id: "v-esposa-joven",
-    title_es: "Esposa Joven",
-    title_en: "Esposa Joven",
-    description_es: "Zehra es una niña inteligente de trece años cuyos sueños se ven truncados tras ser obligada a casarse con un adinerado heredero.",
-    description_en: "Zehra is an intelligent thirteen-year-old girl whose dreams are cut short after being forced to marry a wealthy heir.",
-    category: "novelas",
-    genre_es: "Novela, Drama",
-    genre_en: "Soap Opera, Drama",
-    duration: "1 Temporada",
-    poster_url: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=400",
-    backdrop_url: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1600",
-    rating: "TV-14",
-    year: "2013",
-    cast: ["Çağla Şimşek", "Orhan Şimşek", "Gözde Mukavelat"],
-    director: "Naci Çelik Berksoy",
+    year: "2023",
+    cast: ["Alperen Duymaz", "Melisa Aslı Pamuk", "Rüya Helin Demirbulut"],
+    director: "Doğa Can Anafarta",
     country: "Turkey"
   },
   {
-    id: "v-mujer-vida",
-    title_es: "La Mujer de mi Vida",
-    title_en: "La Mujer de mi Vida",
-    description_es: "Bárbarita es una chica dulce que se casa con un millonario, desatando una red de celos familiares e intrigas pasionales.",
-    description_en: "Barbarita is a sweet girl who marries a millionaire, unleashing a web of family jealousy and passionate intrigues.",
+    id: "v-hercai",
+    title_es: "Hercai, Amor y Venganza",
+    title_en: "Hercai, Love & Vengeance",
+    description_es: "Miran busca venganza por la muerte de sus padres, pero se enamora perdidamente de Reyyan, la hija de su peor enemigo.",
+    description_en: "Miran seeks revenge for his parents' death, but falls deeply in love withReyyan, the daughter of his worst enemy.",
     category: "novelas",
     genre_es: "Novela, Drama, Romance",
     genre_en: "Soap Opera, Drama, Romance",
     duration: "1 Temporada",
-    poster_url: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=400",
+    poster_url: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=600",
     backdrop_url: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=1600",
     rating: "TV-14",
-    year: "1998",
-    cast: ["Natalia Streignard", "Mario Cimarro", "Lorena Meritano"],
-    director: "José Antonio Ferrara",
-    country: "Venezuela"
+    year: "2019",
+    cast: ["Akın Akınözü", "Ebru Şahin", "Ayda Aksel"],
+    director: "Cem Karci",
+    country: "Turkey"
   },
   {
-    id: "v-heredera",
-    title_es: "La Heredera",
-    title_en: "La Heredera",
-    description_es: "Una rica heredera se enamora de un audaz piloto aviador, desafiando a su ambiciosa familia que busca quedarse con su legado.",
-    description_en: "A wealthy heiress falls in love with a bold pilot, defying her ambitious family who seeks to keep her legacy.",
+    id: "v-esclava",
+    title_es: "La Esclava Madre",
+    title_en: "The Slave Mother",
+    description_es: "Una superproducción dramática brasileña que se sumerge en las intensas y emocionantes luchas por la libertad e igualdad de clases coloniales.",
+    description_en: "An epic colonial Brazilian drama portraying powerful efforts for freedom and survival.",
     category: "novelas",
-    genre_es: "Novela, Drama, Romance",
-    genre_en: "Soap Opera, Drama, Romance",
+    genre_es: "Drama, Histórica",
+    genre_en: "Drama, History",
     duration: "1 Temporada",
-    poster_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400",
-    backdrop_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1600",
+    poster_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600",
+    backdrop_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1600",
     rating: "TV-14",
-    year: "2004",
-    cast: ["Silvia Navarro", "Sergio Basañez", "Aylín Mújica"],
-    director: "Luis Alberto Lamata",
-    country: "Mexico"
+    year: "2016",
+    cast: ["Gabriela Moreyra", "Pedro Carvalho", "Fernando Pavão"],
+    director: "Ivan Zettel",
+    country: "Brazil"
   },
   {
     id: "v-madrastra",
-    title_es: "La Madrastra",
-    title_en: "La Madrastra",
-    description_es: "María es condenada injustamente por un crimen. Tras salir de prisión, regresa como la madrastra para descubrir al verdadero asesino.",
-    description_en: "Maria is unjustly condemned for a crime. After leaving prison, she returns as the stepmother to find the real murderer.",
+    title_es: "Madrastra",
+    title_en: "Madrastra",
+    description_es: "Una decidida madre regresa del destierro con una nueva identidad para demostrar su inocencia y recuperar el amor de sus hijos.",
+    description_en: "A determined mother returns with a new identity to prove her innocence and win back her children's hearts.",
     category: "novelas",
-    genre_es: "Novela, Drama, Misterio",
-    genre_en: "Soap Opera, Drama, Mystery",
+    genre_es: "Drama, Romance, Misterio",
+    genre_en: "Drama, Romance, Mystery",
     duration: "1 Temporada",
-    poster_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400",
-    backdrop_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1600",
+    poster_url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600",
+    backdrop_url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1600",
     rating: "TV-14",
     year: "2005",
     cast: ["Victoria Ruffo", "César Évora", "Jacqueline Andere"],
     director: "Jorge Edgar Ramírez",
     country: "Mexico"
+  },
+  {
+    id: "v-vidarobada",
+    title_es: "Vida Robada",
+    title_en: "Stolen Life",
+    description_es: "Secretos del pasado, usurpación de identidades y engaños familiares marcan el dramático curso de dos mujeres enfrentadas.",
+    description_en: "Past secrets, stolen identities, and deep family deceits mark the dramatic course of two rival women.",
+    category: "novelas",
+    genre_es: "Drama, Suspenso",
+    genre_en: "Drama, Suspense",
+    duration: "1 Temporada",
+    poster_url: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=600",
+    backdrop_url: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=1600",
+    rating: "TV-14",
+    year: "2023",
+    cast: ["Angelique Boyer", "Sebastian Rulli"],
+    director: "Sergio Cataño",
+    country: "Mexico"
+  },
+  {
+    id: "v-merobomivida",
+    title_es: "Me Robó Mi Vida",
+    title_en: "That Is My Life",
+    description_es: "Bahar es una joven humilde y bondadosa que desconoce que es la única legítima heredera de una descomunal fortuna familiar.",
+    description_en: "Bahar is a sweet girl who is completely unaware she is the sole heiress to an immense inheritance.",
+    category: "novelas",
+    genre_es: "Drama, Romance, Intriga",
+    genre_en: "Drama, Romance, Intrigue",
+    duration: "1 Temporada",
+    poster_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=600",
+    backdrop_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1600",
+    rating: "TV-14",
+    year: "2014",
+    cast: ["Ezgi Asaroğlu", "Keremcem", "Ceren Moray"],
+    director: "Merve Girgin",
+    country: "Turkey"
+  },
+  {
+    id: "v-imperio",
+    title_es: "Imperio",
+    title_en: "Empire",
+    description_es: "La implacable obsesión por el poder, el dinero, intrigas amorosas y el destino de un gran imperio de joyas preciosas.",
+    description_en: "The relentless obsession with power, greed, love affairs, and the fate of a massive empire of precious stones.",
+    category: "novelas",
+    genre_es: "Drama, Suspenso, Romance",
+    genre_en: "Drama, Suspense, Romance",
+    duration: "1 Temporada",
+    poster_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600",
+    backdrop_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1600",
+    rating: "TV-14",
+    year: "2014",
+    cast: ["Alexandre Nero", "Lília Cabral", "Leandra Leal"],
+    director: "Rogério Gomes",
+    country: "Brazil"
+  },
+  {
+    id: "v-recuerdamicorazon",
+    title_es: "Recuerda Mi Corazón",
+    title_en: "Remember Heart",
+    description_es: "Una conmovedora e intensa intriga romántica donde el pasado regresa con dolorosas verdades y pasiones inolvidables.",
+    description_en: "A moving romantic drama where secrets from the past resurface with painful truths and unforgettable passions.",
+    category: "novelas",
+    genre_es: "Drama, Romance",
+    genre_en: "Drama, Romance",
+    duration: "1 Temporada",
+    poster_url: "https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=600",
+    backdrop_url: "https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=1600",
+    rating: "TV-14",
+    year: "2015",
+    cast: ["Beren Saat", "Engin Akyürek"],
+    director: "Hilal Saral",
+    country: "Turkey"
+  },
+  {
+    id: "v-elamorfrentealpoder",
+    title_es: "El Amor Frente Al Poder",
+    title_en: "Love vs Power",
+    description_es: "Dos herederos de familias rivales se debaten entre la lealtad a sus imperios empresariales de alta alcurnia o su amor indomable.",
+    description_en: "Two young heirs to rival business empires are torn between loyalty to their families or their untamed love.",
+    category: "novelas",
+    genre_es: "Drama, Intrigas, Romance",
+    genre_en: "Drama, Intrigue, Romance",
+    duration: "1 Temporada",
+    poster_url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600",
+    backdrop_url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1600",
+    rating: "TV-14",
+    year: "2021",
+    cast: ["Kıvanç Tatlıtuğ", "Tuba Büyüküstün"],
+    director: "Ali Bilgin",
+    country: "Turkey"
+  },
+  {
+    id: "v-elsecretodeferiha",
+    title_es: "El Secreto de Feriha",
+    title_en: "Feriha's Secret",
+    description_es: "Feriha oculta sus orígenes humildes al entrar en una universidad elitista, atrapada en su propio juego de mentiras por amor.",
+    description_en: "Feriha covers up her humble life to fit into an elite private university, trapped in her own net of romantic lies.",
+    category: "novelas",
+    genre_es: "Drama, Romance",
+    genre_en: "Drama, Romance",
+    duration: "1 Temporada",
+    poster_url: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=600",
+    backdrop_url: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1600",
+    rating: "TV-14",
+    year: "2011",
+    cast: ["Hazal Kaya", "Çağatay Ulusoy", "Vahide Perçin"],
+    director: "Barış Yöş",
+    country: "Turkey"
   }
 ];
 
@@ -854,6 +890,32 @@ export default function App() {
   const kidsVideos = filteredVideos.filter(v => v.category === 'kids');
   const customUploadedVideos = filteredVideos.filter(v => v.isCustom);
 
+  // Dynamically populated shelves prioritizing custom/new uploads
+  const newlyAddedShelfVideos = (() => {
+    // Custom/uploaded videos always go to the front of Newly Added
+    const custom = videos.filter(v => v.isCustom);
+    const defaultIds = ['v-ruptura', 'v-pinamadura', 'v-venganzasalvaje', 'v-undivorcio', 'v-glorias', 'v-unamigo', 'v-pobrespero', 'v-desolado', 'v-designacion'];
+    const def = defaultIds.map(id => videos.find(v => v.id === id)).filter(Boolean) as Video[];
+    const combined = [...custom, ...def];
+    return Array.from(new Map(combined.map(v => [v.id, v])).values());
+  })();
+
+  const popularSeriesShelfVideos = (() => {
+    const customSeries = videos.filter(v => v.isCustom && (v.category === 'series' || v.category === 'novelas'));
+    const defaultIds = ['v-safir', 'v-corazon', 'v-mayday', 'v-hercai', 'v-esclava', 'v-secretos', 'v-capo', 'v-sintetas', 'v-promesa'];
+    const def = defaultIds.map(id => videos.find(v => v.id === id)).filter(Boolean) as Video[];
+    const combined = [...customSeries, ...def];
+    return Array.from(new Map(combined.map(v => [v.id, v])).values());
+  })();
+
+  const popularMoviesShelfVideos = (() => {
+    const customMovies = videos.filter(v => v.isCustom && v.category === 'movies');
+    const defaultIds = ['v-pinamadura', 'v-secretos', 'v-undivorcio', 'v-glorias', 'v-unamigo', 'v-desolado', 'v-designacion'];
+    const def = defaultIds.map(id => videos.find(v => v.id === id)).filter(Boolean) as Video[];
+    const combined = [...customMovies, ...def];
+    return Array.from(new Map(combined.map(v => [v.id, v])).values());
+  })();
+
   // Scroll controls for carousels
   const scrollCarousel = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
     if (ref.current) {
@@ -874,6 +936,9 @@ export default function App() {
 
   // Helper to obtain episodes for any selected Video to guarantee screenshot presentation
   const getEpisodeLimitForVideoAndSeason = (videoId: string, season: number): number => {
+    if (videoId === 'v-safir') {
+      return 89; // Safir has 89 episodes in Season 1 in the screenshot (E1-E25, E26-E50, E51-E75, E76-E89)
+    }
     if (videoId === 'v-fazilet') {
       if (season === 1) return 174;
       if (season === 2) return 110;
@@ -919,6 +984,20 @@ export default function App() {
       const count = end - start + 1;
       
       const getEpisodeTitle = (num: number, isEs: boolean) => {
+        if (video.id === 'v-safir') {
+          const titles_es_pool = [
+            "Regreso a Capadocia", "Defendiendo a Feraye", "El Chantaje de Cemile", 
+            "La Propuesta de Yaman", "El Secreto de Feraye", "Casados", 
+            "El Rechazo de Yaman", "La Promesa Rota", "La Traición", "Un Nuevo Plan"
+          ];
+          const titles_en_pool = [
+            "Return to Cappadocia", "Defending Feraye", "Cemile's Blackmail", 
+            "Yaman's Proposal", "Feraye's Secret", "Married", 
+            "Yaman's Rejection", "Broken Promise", "Betrayal", "A New Plan"
+          ];
+          const idx = (num - 1) % titles_es_pool.length;
+          return isEs ? titles_es_pool[idx] : titles_en_pool[idx];
+        }
         if (video.id === 'v-fazilet') {
           const titles_es_pool = [
             "Escapar de la Pobreza", "Amor Secreto", "La Familia Egemen", "Búsqueda de Riqueza", "Choque de Mundos",
@@ -965,14 +1044,26 @@ export default function App() {
         }
       };
 
-      const durations = ["43min", "45min", "47min", "43min", "44min"];
-      const posters = [
-        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400",
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400",
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400",
-        "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=400",
-        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=400"
-      ];
+      const durations = video.id === 'v-safir' 
+        ? ["44min", "45min", "50min", "48min", "46min", "47min"] 
+        : ["43min", "45min", "47min", "43min", "44min"];
+
+      const posters = video.id === 'v-safir'
+        ? [
+            "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=400",
+            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400",
+            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400",
+            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400",
+            "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=400",
+            "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=400"
+          ]
+        : [
+            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400",
+            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400",
+            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400",
+            "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=400",
+            "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=400"
+          ];
       
       return Array.from({ length: count }).map((_, i) => {
         const epNum = start + i;
@@ -985,8 +1076,8 @@ export default function App() {
           title_es: getEpisodeTitle(epNum, true),
           title_en: getEpisodeTitle(epNum, false),
           duration: durations[durIdx],
-          release_date: season === 1 ? "26 Mar, 2017" : season === 2 ? "12 Oct, 2018" : "05 Sep, 2019",
-          poster_url: video.id === 'v-fazilet' ? posters[postIdx] : (video.poster_url || posters[postIdx]),
+          release_date: video.id === 'v-safir' ? "5 Sep, 2023" : (season === 1 ? "26 Mar, 2017" : season === 2 ? "12 Oct, 2018" : "05 Sep, 2019"),
+          poster_url: video.id === 'v-fazilet' ? posters[postIdx] : (posters[postIdx]),
           video_url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
         };
       });
@@ -1038,7 +1129,7 @@ export default function App() {
     <div className="min-h-screen bg-[#0A0A0B] text-white/95 font-sans selection:bg-yellow-500 selection:text-black">
       
       {/* BRANDING HEADER NAVIGATION */}
-      <header id="main-header" className="sticky top-0 z-50 bg-gradient-to-b from-[#0e0f12] via-[#0e0f12]/95 to-[#0e0f12]/80 backdrop-blur-md border-b border-white/5 px-4 py-3 md:px-8 flex items-center justify-between transition-all select-none">
+      <header id="main-header" className="sticky top-0 z-50 bg-gradient-to-b from-[#0e0f12] via-[#0e0f12]/95 to-[#0e0f12]/80 backdrop-blur-md border-b border-white/5 px-4 py-3 md:px-6 lg:px-10 flex items-center justify-between transition-all select-none">
         <div className="flex items-center gap-6 md:gap-8 lg:gap-14">
           
           {/* Logo styled like Canela.TV in screenshot */}
@@ -1638,7 +1729,7 @@ export default function App() {
             </div>
             
             {/* Left aligned metadata content container */}
-            <div className="relative z-10 max-w-2xl px-6 md:px-16 py-12 space-y-5 md:space-y-6">
+            <div className="relative z-10 max-w-2xl px-4 md:px-10 py-12 space-y-5 md:space-y-6">
               
               {/* Tiny subtle back trigger for mobile accessibility */}
               <button
@@ -1741,7 +1832,7 @@ export default function App() {
               const resolvedActiveTab = tabs.includes(activeEpisodeGroupTab) ? activeEpisodeGroupTab : tabs[0] || 'E1 - E25';
 
               return (
-                <div id="episodes-container" className="max-w-7xl mx-auto px-6 md:px-16 py-8 border-b border-white/5 bg-neutral-950/20">
+                <div id="episodes-container" className="w-full px-4 md:px-6 lg:px-10 py-8 border-b border-white/5 bg-neutral-950/20">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-3.5 mb-6">
                     
                     {/* Modern Season Selector Pill Controls & Count Indicator Badge */}
@@ -1851,7 +1942,7 @@ export default function App() {
           }
 
           {/* TAMBIÉN TE PUEDE GUSTAR (You May Also Like) CLASSICS SECTION - Match TV Screenshot */}
-          <div className="w-full px-6 md:px-16 py-10" id="tambien-te-puede-gustar-section">
+          <div className="w-full px-4 md:px-10 py-10" id="tambien-te-puede-gustar-section">
             <h3 className="text-xl md:text-2xl font-black text-white mb-6 font-sans tracking-tight">
               {language === 'es' ? 'También te puede gustar' : 'You may also like'}
             </h3>
@@ -1881,12 +1972,12 @@ export default function App() {
                       className="w-[120px] sm:w-[150px] md:w-[172px] shrink-0 group cursor-pointer transition-all duration-300 select-none"
                       title={language === 'es' ? classic.title_es : classic.title_en}
                     >
-                      <div className="aspect-[2/3] relative rounded-[4px] overflow-hidden bg-neutral-900 border-[3.5px] border-[#eae6ce] group-hover:border-white transition-all duration-300 shadow-xl group-hover:shadow-[0_4px_25px_rgba(255,255,255,0.15)]">
+                      <div className="aspect-[2/3] relative rounded-lg overflow-hidden bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 transition-all duration-300 shadow-xl">
                         <img
                           referrerPolicy="no-referrer"
                           src={classic.poster_url}
                           alt={classic.title_es}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           loading="lazy"
                         />
                         {/* Dark gradient vignette over poster card */}
@@ -1919,7 +2010,7 @@ export default function App() {
           </div>
 
           {/* MÁS DETALLES (More Details Column Grid Layout) */}
-          <div className="max-w-7xl mx-auto px-6 md:px-16 py-8 border-t border-white/5 font-sans">
+          <div className="w-full px-4 md:px-6 lg:px-10 py-8 border-t border-white/5 font-sans">
             <h3 className="text-xl md:text-2xl font-black text-white mb-8 tracking-tight font-sans uppercase">
               {language === 'es' ? 'Más Detalles' : 'More Details'}
             </h3>
@@ -1981,98 +2072,6 @@ export default function App() {
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* ACCORDION COMMENTS & RATINGS SECTION (Collapsed by default, styled beautifully) */}
-          <div className="max-w-7xl mx-auto px-6 md:px-16 py-4 mt-4">
-            <details className="group bg-[#111112]/50 border border-white/5 rounded-xl p-4 cursor-pointer outline-none transition-colors hover:border-white/10">
-              <summary className="text-xs md:text-sm font-bold text-gray-400 flex items-center justify-between list-none select-none">
-                <span className="flex items-center gap-2">
-                  <MessageSquare className="w-4 h-4 text-[#E50914]" />
-                  <span>{language === 'es' ? 'Comentarios de Fans & Reseñas' : 'Fan Reviews & Feedback'}</span>
-                </span>
-                <ChevronDown className="w-4 h-4 text-gray-400 group-open:rotate-180 transition-transform" />
-              </summary>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4 border-t border-white/5 mt-4 cursor-default" onClick={e => e.stopPropagation()}>
-                
-                {/* Details note */}
-                <div className="space-y-3">
-                  <p className="text-xs text-gray-400 leading-relaxed font-sans font-medium">
-                    {language === 'es' 
-                      ? 'Únete a la conversación. Deja tu reseña con estrellas sobre esta transmisión clásica y comparte tu opinión con otros amantes de las películas retro.' 
-                      : 'Join the conversation. Leave your star review on this classic stream and share your feedback with other retro movie lovers.'
-                    }
-                  </p>
-                  <div className="bg-[#1C1C1E]/40 border border-white/5 p-3 rounded text-[11px] text-gray-400 font-sans">
-                    <strong>{language === 'es' ? 'Señal de Transmisión:' : 'Broadcast Signal:'}</strong> Cine de Oro Clásicos • 1080p Standby
-                  </div>
-                </div>
-
-                {/* Submit review */}
-                <div className="space-y-4 bg-black/40 border border-white/5 p-4 rounded-xl">
-                  <h5 className="text-xs font-bold text-white uppercase tracking-widest">
-                    <span>{language === 'es' ? 'Escribe una Reseña' : 'Write a Review'}</span>
-                  </h5>
-
-                  <form onSubmit={handleSubmitReview} className="space-y-3">
-                    <div className="grid grid-cols-2 gap-2">
-                      <input
-                        type="email"
-                        required
-                        placeholder="user@example.com"
-                        value={commentEmail}
-                        onChange={(e) => setCommentEmail(e.target.value)}
-                        className="bg-black border border-white/5 rounded px-2 py-1.5 text-xs outline-none text-white focus:border-[#E50914] font-sans"
-                      />
-                      <select
-                        value={commentRating}
-                        onChange={(e) => setCommentRating(parseInt(e.target.value))}
-                        className="bg-black border border-white/5 rounded px-1 py-1.5 text-xs outline-none text-white focus:border-[#E50914] font-sans font-semibold text-yellow-500"
-                      >
-                        <option value={5}>⭐⭐⭐⭐⭐</option>
-                        <option value={4}>⭐⭐⭐⭐</option>
-                        <option value={3}>⭐⭐⭐</option>
-                        <option value={2}>⭐⭐</option>
-                        <option value={1}>⭐</option>
-                      </select>
-                    </div>
-                    <textarea
-                      rows={2}
-                      required
-                      placeholder={language === 'es' ? '¿Qué te pareció este stream?' : 'What did you think?'}
-                      value={commentText}
-                      onChange={(e) => setCommentText(e.target.value)}
-                      className="w-full bg-black border border-white/5 rounded px-2.5 py-1.5 text-xs outline-none text-white resize-none focus:border-[#E50914] font-sans"
-                    />
-                    <button
-                      type="submit"
-                      className="w-full bg-[#E50914] text-white py-2 rounded text-xs font-bold transition-all hover:bg-red-700 cursor-pointer"
-                    >
-                      {language === 'es' ? 'Enviar Comentario' : 'Submit'}
-                    </button>
-                  </form>
-
-                  <div className="space-y-2 max-h-36 overflow-y-auto pr-1">
-                    {reviews.filter(r => r.video_id === selectedVideoForDetails.id).length === 0 ? (
-                      <p className="text-[10px] text-gray-500 italic text-center py-2">
-                        {language === 'es' ? 'No hay comentarios aún.' : 'No reviews yet.'}
-                      </p>
-                    ) : (
-                      reviews.filter(r => r.video_id === selectedVideoForDetails.id).map(rev => (
-                        <div key={rev.id} className="bg-black/50 p-2 rounded text-[11px] space-y-1">
-                          <div className="flex justify-between items-center text-gray-400 font-sans">
-                            <strong className="truncate max-w-[120px] font-bold text-gray-200">{rev.user_email}</strong>
-                            <span className="text-[9px]">{rev.date}</span>
-                          </div>
-                          <p className="text-gray-300 font-medium font-sans">"{rev.comment}"</p>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
-              </div>
-            </details>
           </div>
 
         </section>
@@ -2238,7 +2237,7 @@ export default function App() {
               </button>
 
               {/* Left Content aligned perfectly to tv screenshots */}
-              <div className="relative z-10 max-w-4xl px-8 md:px-16 space-y-4 md:space-y-5 pt-12">
+              <div className="relative z-10 max-w-4xl px-4 md:px-10 space-y-4 md:space-y-5 pt-12">
                 
                 {/* Dynamic premium label */}
                 <div className="flex items-center gap-2">
@@ -2326,7 +2325,7 @@ export default function App() {
 
       {/* FILTER SEARCH INFORMATION BADGE */}
       {searchQuery && !isAdminOpen && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
+        <div className="w-full px-4 md:px-6 lg:px-10 pt-6">
           <p className="text-sm text-gray-400 font-sans">
             {language === 'es' ? 'Resultados para la búsqueda:' : 'Search results for:'}{" "}
             <span className="text-yellow-400 font-extrabold italic">"{searchQuery}"</span>
@@ -2336,13 +2335,13 @@ export default function App() {
 
       {/* FAVORITES BOOKMARKS ROW */}
       {favorites.length > 0 && selectedCategory === 'all' && searchQuery === '' && !selectedVideoForDetails && !isAdminOpen && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-6 font-sans">
+        <section className="w-full px-4 md:px-6 lg:px-10 py-6 font-sans">
           <h3 className="text-base md:text-lg font-black mb-4 tracking-tight flex items-center gap-2 text-white">
             <Heart className="w-4 h-4 text-rose-500 fill-current" />
             <span>{t.myList}</span>
           </h3>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 sm:gap-5 md:gap-6">
             {videos
               .filter(v => favorites.includes(v.id))
               .map(vid => (
@@ -2380,7 +2379,7 @@ export default function App() {
 
       {/* ADMINISTRATIVE DASHBOARD (OPENED IN A DEDICATED SEPARATE SECTION) */}
       {isAdminOpen && isLoggedIn && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-6 animate-fadeIn">
+        <section className="w-full px-4 md:px-6 lg:px-10 py-6 animate-fadeIn">
           <div className="bg-neutral-900 border border-white/5 overflow-hidden shadow-2xl p-6 rounded-2xl relative">
             <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-6">
               <h2 className="text-lg md:text-xl font-black text-white uppercase tracking-tight flex items-center gap-2 font-sans">
@@ -2408,7 +2407,7 @@ export default function App() {
       )}
 
       {/* MAIN SHELVES DISPLAY */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12">
+      <main className="w-full px-4 md:px-6 lg:px-10 py-8 space-y-12">
         <>
             {/* VIEWPORTS ROUTER FOR SPECIFIC CATEGORY TABS OR SEARCH */}
         {(selectedCategory !== 'all' || searchQuery !== '') && (
@@ -2427,7 +2426,7 @@ export default function App() {
               </h3>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 sm:gap-5 md:gap-6">
               {filteredVideos.map(vid => (
                 <div
                   key={vid.id}
@@ -2466,7 +2465,7 @@ export default function App() {
         */}
         {selectedCategory === 'all' && searchQuery === '' && !selectedVideoForDetails && (
           <>
-            {/* ROW 1: RECIEN AGREGADO (EXACT SCREENSHOT ROW 1) */}
+            {/* ROW 1: RECIEN AGREGADO (EXACT SCREENSHOT ROW 1 + DYNAMIC USER UPLOADS) */}
             <section className="space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-base md:text-lg font-black tracking-tight text-white flex items-center gap-2 font-sans">
@@ -2498,44 +2497,45 @@ export default function App() {
                 ref={newlyAddedRef}
                 className="flex gap-4 overflow-x-auto pb-4 pt-1 justify-start scrollbar-none scroll-smooth"
               >
-                {/* Custom explicit exact ordered cards row 1 */}
-                {['v-ruptura', 'v-pinamadura', 'v-venganzasalvaje', 'v-undivorcio', 'v-glorias', 'v-unamigo', 'v-pobrespero', 'v-desolado', 'v-designacion']
-                  .map(id => videos.find(v => v.id === id))
-                  .filter(Boolean)
-                  .map(vid => (
-                    <div
-                      key={vid!.id}
-                      onClick={() => handleSelectVideo(vid!)}
-                      className={`${isGlobalTvMode ? 'w-[190px] sm:w-[220px]' : 'w-[140px] sm:w-[170px]'} shrink-0 bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300 shadow-md relative`}
-                    >
-                      <div className="aspect-[2/3] relative overflow-hidden bg-neutral-950">
-                        <img
-                          referrerPolicy="no-referrer"
-                          src={vid!.poster_url}
-                          alt={language === 'es' ? vid!.title_es : vid!.title_en}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
-                          <div className="p-1 bg-[#E50914] text-white rounded-full shadow-lg">
-                            <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
-                          </div>
+                {newlyAddedShelfVideos.map(vid => (
+                  <div
+                    key={vid.id}
+                    onClick={() => handleSelectVideo(vid)}
+                    className={`${isGlobalTvMode ? 'w-[190px] sm:w-[220px]' : 'w-[140px] sm:w-[170px]'} shrink-0 bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300 shadow-md relative`}
+                  >
+                    <div className="aspect-[2/3] relative overflow-hidden bg-neutral-950">
+                      <img
+                        referrerPolicy="no-referrer"
+                        src={vid.poster_url}
+                        alt={language === 'es' ? vid.title_es : vid.title_en}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      {vid.isCustom && (
+                        <div className="absolute top-2 left-2 bg-red-600 text-white text-[8px] font-mono font-bold uppercase px-2 py-0.5 rounded shadow">
+                          NUEVO
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
+                        <div className="p-1 bg-[#E50914] text-white rounded-full shadow-lg">
+                          <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
                         </div>
                       </div>
-
-                      <div className="p-2.5">
-                        <h4 className={`font-bold text-white truncate max-w-full group-hover:text-[#E50914] transition-colors ${isGlobalTvMode ? 'text-xs sm:text-sm' : 'text-[11px]'}`}>
-                          {language === 'es' ? vid!.title_es : vid!.title_en}
-                        </h4>
-                        <p className={`font-mono mt-0.5 ${isGlobalTvMode ? 'text-[10px] sm:text-xs text-gray-400' : 'text-[9px] text-gray-500'}`}>
-                          {vid!.year} • {vid!.duration}
-                        </p>
-                      </div>
                     </div>
-                  ))}
+
+                    <div className="p-2.5">
+                      <h4 className={`font-bold text-white truncate max-w-full group-hover:text-[#E50914] transition-colors ${isGlobalTvMode ? 'text-xs sm:text-sm' : 'text-[11px]'}`}>
+                        {language === 'es' ? vid.title_es : vid.title_en}
+                      </h4>
+                      <p className={`font-mono mt-0.5 ${isGlobalTvMode ? 'text-[10px] sm:text-xs text-gray-400' : 'text-[9px] text-gray-500'}`}>
+                        {vid.year} • {vid.duration}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </section>
 
-            {/* ROW 2: SERIES MAS POPULARES (EXACT SCREENSHOT ROW 2) */}
+            {/* ROW 2: SERIES MAS POPULARES (EXACT SCREENSHOT ROW 2 + DYNAMIC USER SERIES) */}
             <section className="space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-base md:text-lg font-black tracking-tight text-white flex items-center gap-2 font-sans">
@@ -2561,50 +2561,51 @@ export default function App() {
                 ref={mostPopularRef}
                 className="flex gap-4 overflow-x-auto pb-4 pt-1 justify-start scrollbar-none scroll-smooth"
               >
-                {/* Custom explicit exact ordered cards row 2 */}
-                {['v-safir', 'v-corazon', 'v-mayday', 'v-hercai', 'v-esclava', 'v-secretos', 'v-capo', 'v-sintetas', 'v-promesa']
-                  .map(id => videos.find(v => v.id === id))
-                  .filter(Boolean)
-                  .map(vid => (
-                    <div
-                      key={vid!.id}
-                      onClick={() => handleSelectVideo(vid!)}
-                      className={`${isGlobalTvMode ? 'w-[190px] sm:w-[220px]' : 'w-[140px] sm:w-[170px]'} shrink-0 bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300 shadow-md relative`}
-                    >
-                      <div className="aspect-[2/3] relative overflow-hidden bg-neutral-950">
-                        <img
-                          referrerPolicy="no-referrer"
-                          src={vid!.poster_url}
-                          alt={language === 'es' ? vid!.title_es : vid!.title_en}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
-                          <div className="p-1 bg-[#E50914] text-white rounded-full shadow-lg">
-                            <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
-                          </div>
+                {popularSeriesShelfVideos.map(vid => (
+                  <div
+                    key={vid.id}
+                    onClick={() => handleSelectVideo(vid)}
+                    className={`${isGlobalTvMode ? 'w-[190px] sm:w-[220px]' : 'w-[140px] sm:w-[170px]'} shrink-0 bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300 shadow-md relative`}
+                  >
+                    <div className="aspect-[2/3] relative overflow-hidden bg-neutral-950">
+                      <img
+                        referrerPolicy="no-referrer"
+                        src={vid.poster_url}
+                        alt={language === 'es' ? vid.title_es : vid.title_en}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      {vid.isCustom && (
+                        <div className="absolute top-2 left-2 bg-red-600 text-white text-[8px] font-mono font-bold uppercase px-2 py-0.5 rounded shadow">
+                          S SERIES
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
+                        <div className="p-1 bg-[#E50914] text-white rounded-full shadow-lg">
+                          <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
                         </div>
                       </div>
-
-                      <div className="p-2.5">
-                        <h4 className={`font-bold text-white truncate max-w-full group-hover:text-[#E50914] transition-colors ${isGlobalTvMode ? 'text-xs sm:text-sm' : 'text-[11px]'}`}>
-                          {language === 'es' ? vid!.title_es : vid!.title_en}
-                        </h4>
-                        <p className={`font-mono mt-0.5 ${isGlobalTvMode ? 'text-[10px] sm:text-xs text-gray-400' : 'text-[9px] text-gray-500'}`}>
-                          {vid!.year} • {vid!.duration}
-                        </p>
-                      </div>
                     </div>
-                  ))}
+
+                    <div className="p-2.5">
+                      <h4 className={`font-bold text-white truncate max-w-full group-hover:text-[#E50914] transition-colors ${isGlobalTvMode ? 'text-xs sm:text-sm' : 'text-[11px]'}`}>
+                        {language === 'es' ? vid.title_es : vid.title_en}
+                      </h4>
+                      <p className={`font-mono mt-0.5 ${isGlobalTvMode ? 'text-[10px] sm:text-xs text-gray-400' : 'text-[9px] text-gray-500'}`}>
+                        {vid.year} • {vid.duration}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </section>
 
-            {/* ROW 3: LO MEJOR DE CANELA */}
+            {/* ROW 3: PELICULAS POPULARES / LO MEJOR EN CINE */}
             <section className="space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-base md:text-lg font-black tracking-tight text-white flex items-center gap-2 font-sans">
-                  <span>{language === 'es' ? 'Lo Mejor de Canela' : 'The Best of Canela'}</span>
+                  <span>{t.popularMovies}</span>
                   <button 
-                    onClick={() => alert(language === 'es' ? 'Explorando Lo Mejor de Canela...' : 'Viewing Best of Canela...')}
+                    onClick={() => alert(language === 'es' ? 'Explorando películas recomendadas...' : 'Viewing all recommended movies...')}
                     className="text-xs font-bold text-gray-400 hover:text-[#E50914] transition-colors cursor-pointer"
                   >
                     Más &gt;
@@ -2630,91 +2631,44 @@ export default function App() {
                 ref={bestOfCanelaRef}
                 className="flex gap-4 overflow-x-auto pb-4 pt-1 justify-start scrollbar-none scroll-smooth"
               >
-                {/* Mixed selection */}
-                {['v-pinamadura', 'v-secretos', 'v-undivorcio', 'v-glorias', 'v-unamigo', 'v-desolado', 'v-designacion']
-                  .map(id => videos.find(v => v.id === id))
-                  .filter(Boolean)
-                  .map(vid => (
-                    <div
-                      key={vid!.id}
-                      onClick={() => handleSelectVideo(vid!)}
-                      className={`${isGlobalTvMode ? 'w-[190px] sm:w-[220px]' : 'w-[140px] sm:w-[170px]'} shrink-0 bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300 shadow-md relative`}
-                    >
-                      <div className="aspect-[2/3] relative overflow-hidden bg-neutral-950">
-                        <img
-                          referrerPolicy="no-referrer"
-                          src={vid!.poster_url}
-                          alt={language === 'es' ? vid!.title_es : vid!.title_en}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
-                          <div className="p-1 bg-[#E50914] text-white rounded-full shadow-lg">
-                            <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
-                          </div>
+                {popularMoviesShelfVideos.map(vid => (
+                  <div
+                    key={vid.id}
+                    onClick={() => handleSelectVideo(vid)}
+                    className={`${isGlobalTvMode ? 'w-[190px] sm:w-[220px]' : 'w-[140px] sm:w-[170px]'} shrink-0 bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300 shadow-md relative`}
+                  >
+                    <div className="aspect-[2/3] relative overflow-hidden bg-neutral-950">
+                      <img
+                        referrerPolicy="no-referrer"
+                        src={vid.poster_url}
+                        alt={language === 'es' ? vid.title_es : vid.title_en}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      {vid.isCustom && (
+                        <div className="absolute top-2 left-2 bg-red-600 text-white text-[8px] font-mono font-bold uppercase px-2 py-0.5 rounded shadow">
+                          PELÍCULA
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
+                        <div className="p-1 bg-[#E50914] text-white rounded-full shadow-lg">
+                          <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
                         </div>
                       </div>
-
-                      <div className="p-2.5">
-                        <h4 className={`font-bold text-white truncate max-w-full group-hover:text-[#E50914] transition-colors ${isGlobalTvMode ? 'text-xs sm:text-sm' : 'text-[11px]'}`}>
-                          {language === 'es' ? vid!.title_es : vid!.title_en}
-                        </h4>
-                        <p className={`font-mono mt-0.5 ${isGlobalTvMode ? 'text-[10px] sm:text-xs text-gray-400' : 'text-[9px] text-gray-500'}`}>
-                          {vid!.year} • {vid!.duration}
-                        </p>
-                      </div>
                     </div>
-                  ))}
+
+                    <div className="p-2.5">
+                      <h4 className={`font-bold text-white truncate max-w-full group-hover:text-[#E50914] transition-colors ${isGlobalTvMode ? 'text-xs sm:text-sm' : 'text-[11px]'}`}>
+                        {language === 'es' ? vid.title_es : vid.title_en}
+                      </h4>
+                      <p className={`font-mono mt-0.5 ${isGlobalTvMode ? 'text-[10px] sm:text-xs text-gray-400' : 'text-[9px] text-gray-500'}`}>
+                        {vid.year} • {vid.duration}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </section>
           </>
-        )}
-
-        {/* SECTION: USER UPLOADED LOCAL STREAMS (Always visible under carousels if exists) */}
-        {customUploadedVideos.length > 0 && selectedCategory === 'all' && searchQuery === '' && !selectedVideoForDetails && (
-          <section className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-base md:text-sm font-black text-white flex items-center gap-2">
-                <Film className="w-5 h-5 text-purple-400" />
-                <span>{t.customUploads}</span>
-              </h3>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-              {customUploadedVideos.map(vid => (
-                <div
-                  key={vid.id}
-                  onClick={() => handleSelectVideo(vid)}
-                  className="bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300 shadow-md relative"
-                >
-                  <div className="aspect-[2/3] relative overflow-hidden bg-neutral-950">
-                    <img
-                      referrerPolicy="no-referrer"
-                      src={vid.poster_url}
-                      alt={language === 'es' ? vid.title_es : vid.title_en}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute top-2 left-2 bg-purple-600 text-white text-[9px] font-mono font-bold uppercase px-2 py-0.5 rounded-full shadow">
-                      Local
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
-                      <div className="p-1 px-1.5 bg-[#E50914] text-white rounded-full shadow">
-                        <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-2.5">
-                    <h4 className="text-[11.5px] font-bold text-white truncate">
-                      {language === 'es' ? vid.title_es : vid.title_en}
-                    </h4>
-                    <p className="text-[9.5px] text-gray-400 font-mono mt-0.5">
-                      {vid.year} • {vid.duration}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
         )}
 
         {/* NO SEARCH RESULTS DISPLAY */}
@@ -2731,8 +2685,8 @@ export default function App() {
       </main>
 
       {/* SCREENSHOT ACCURATE PREMIUM FOOTER SECTION */}
-      <footer className="bg-[#0B0C0E] border-t border-white/5 px-6 md:px-16 py-12 mt-16 font-sans select-none text-gray-400">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <footer className="bg-[#0B0C0E] border-t border-white/5 px-4 md:px-6 lg:px-10 py-12 mt-16 font-sans select-none text-gray-400">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
           {/* Left Block (Logo, Copyright, General Corporate Links, Social Icons) */}
           <div className="lg:col-span-8 flex flex-col gap-6">
