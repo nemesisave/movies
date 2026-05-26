@@ -17,6 +17,14 @@ const REVIEWS_COL = 'reviews';
 const USERS_COL = 'users';
 
 /**
+ * Helper to recursively remove undefined properties from documents before sending to Firestore,
+ * keeping the standard JSON-safe and database-clean data structure.
+ */
+function sanitize<T>(data: T): T {
+  return JSON.parse(JSON.stringify(data)) as T;
+}
+
+/**
  * Fetches the video catalog from Firestore. 
  * If the collection is empty, it merges and seeds with default cinematic titles.
  */
@@ -32,7 +40,7 @@ export async function fetchVideosFromFirestore(): Promise<Video[]> {
       console.log("Firestore catalog empty. Seeding with default Spanish & English classics...");
       // Seed DEFAULT_VIDEOS
       for (const video of DEFAULT_VIDEOS) {
-        await setDoc(doc(db, VIDEOS_COL, video.id), video);
+        await setDoc(doc(db, VIDEOS_COL, video.id), sanitize(video));
       }
       return DEFAULT_VIDEOS;
     }
@@ -50,7 +58,7 @@ export async function fetchVideosFromFirestore(): Promise<Video[]> {
  */
 export async function saveVideoToFirestore(video: Video): Promise<void> {
   try {
-    await setDoc(doc(db, VIDEOS_COL, video.id), video);
+    await setDoc(doc(db, VIDEOS_COL, video.id), sanitize(video));
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, `${VIDEOS_COL}/${video.id}`);
   }
@@ -89,7 +97,7 @@ export async function fetchReviewsFromFirestore(): Promise<UserReview[]> {
  */
 export async function saveReviewToFirestore(review: UserReview): Promise<void> {
   try {
-    await setDoc(doc(db, REVIEWS_COL, review.id), review);
+    await setDoc(doc(db, REVIEWS_COL, review.id), sanitize(review));
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, `${REVIEWS_COL}/${review.id}`);
   }
@@ -136,7 +144,7 @@ export async function getUserProfile(userId: string): Promise<UserProfileData | 
  */
 export async function saveUserProfile(userId: string, data: UserProfileData): Promise<void> {
   try {
-    await setDoc(doc(db, USERS_COL, userId), data, { merge: true });
+    await setDoc(doc(db, USERS_COL, userId), sanitize(data), { merge: true });
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, `${USERS_COL}/${userId}`);
   }
