@@ -689,40 +689,58 @@ export default function App() {
   const t = TRANSLATIONS[language];
 
   // Video insertion handler
-  const handleAddVideo = (newVideo: Video) => {
-    setVideos(prev => [newVideo, ...prev]);
-    setActiveVideo(newVideo);
-    // Automatically trigger visual display feedback
-    setIsAdminOpen(false);
-    
-    // Smooth scroll up to player
-    setTimeout(() => {
-      playerSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 400);
+  const handleAddVideo = async (newVideo: Video) => {
+    try {
+      await saveVideoToFirestore(newVideo);
+      setVideos(prev => [newVideo, ...prev]);
+      setActiveVideo(newVideo);
+      // Automatically trigger visual display feedback
+      setIsAdminOpen(false);
+      
+      // Smooth scroll up to player
+      setTimeout(() => {
+        playerSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 400);
+    } catch (err: any) {
+      console.error("Failed to add video catalog document to Firestore:", err);
+      alert(language === 'es' ? 'Error al publicar la película clásica en Firebase Firestore.' : 'Failed to publish movie document in Firebase Firestore.');
+    }
   };
 
   // Video update handler (for edits or adding episodes)
-  const handleUpdateVideo = (modifiedVideo: Video) => {
-    setVideos(prev => prev.map(v => v.id === modifiedVideo.id ? modifiedVideo : v));
-    
-    // Sync current active structures if edited
-    if (activeVideo.id === modifiedVideo.id) {
-      setActiveVideo(modifiedVideo);
-    }
-    if (selectedVideoForDetails && selectedVideoForDetails.id === modifiedVideo.id) {
-      setSelectedVideoForDetails(modifiedVideo);
+  const handleUpdateVideo = async (modifiedVideo: Video) => {
+    try {
+      await saveVideoToFirestore(modifiedVideo);
+      setVideos(prev => prev.map(v => v.id === modifiedVideo.id ? modifiedVideo : v));
+      
+      // Sync current active structures if edited
+      if (activeVideo.id === modifiedVideo.id) {
+        setActiveVideo(modifiedVideo);
+      }
+      if (selectedVideoForDetails && selectedVideoForDetails.id === modifiedVideo.id) {
+        setSelectedVideoForDetails(modifiedVideo);
+      }
+    } catch (err: any) {
+      console.error("Failed to update video catalog document in Firestore:", err);
+      alert(language === 'es' ? 'Error al actualizar el canal clásico en Firebase.' : 'Database error updating classic stream inside Firebase.');
     }
   };
 
   // Video removal handler
-  const handleRemoveVideo = (id: string) => {
+  const handleRemoveVideo = async (id: string) => {
     if (confirm(language === 'es' ? '¿Estás seguro de eliminar este video subido?' : 'Are you sure you want to delete this uploaded video?')) {
-      const nextVideos = videos.filter(v => v.id !== id);
-      setVideos(nextVideos);
-      
-      // If deleted video was active, switch to default
-      if (activeVideo.id === id) {
-        setActiveVideo(nextVideos[0] || DEFAULT_VIDEOS[0]);
+      try {
+        await deleteVideoFromFirestore(id);
+        const nextVideos = videos.filter(v => v.id !== id);
+        setVideos(nextVideos);
+        
+        // If deleted video was active, switch to default
+        if (activeVideo.id === id) {
+          setActiveVideo(nextVideos[0] || DEFAULT_VIDEOS[0]);
+        }
+      } catch (err: any) {
+        console.error("Failed to delete video from Firestore:", err);
+        alert(language === 'es' ? 'Error al eliminar el video de la base de datos de Firebase.' : 'Error deleting video from the Firebase database.');
       }
     }
   };
@@ -774,26 +792,41 @@ export default function App() {
   };
 
   // Submit reviews
-  const handleSubmitReview = (e: React.FormEvent) => {
+  const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!commentEmail || !commentText.trim()) {
-      alert(language === 'es' ? 'Por favor completa tu correo y comentario' : 'Please provide email and comment');
+    if (!auth.currentUser) {
+      alert(language === 'es' ? 'Por favor inicia sesión para poder escribir y publicar comentarios clásicos.' : 'Please log in with Admin or Google account to write and publish film reviews.');
+      setIsLoginModalOpen(true);
       return;
     }
 
+    const emailToUse = auth.currentUser.email || commentEmail || 'user@canela.tv';
+    if (!commentText.trim()) {
+      alert(language === 'es' ? 'Por favor escribe un comentario o reseña' : 'Please provide a comment or review text');
+      return;
+    }
+
+    const videoIdToUse = (selectedVideoForDetails && selectedVideoForDetails.id) ? selectedVideoForDetails.id : activeVideo.id;
+
     const newRev: UserReview = {
       id: `rev-${Date.now()}`,
-      video_id: activeVideo.id,
-      user_email: commentEmail,
+      video_id: videoIdToUse,
+      user_email: emailToUse,
       rating: commentRating,
-      comment: commentText,
+      comment: commentText.trim(),
       date: new Date().toISOString().split('T')[0]
     };
 
-    setReviews(prev => [newRev, ...prev]);
-    setCommentText('');
-    setCommentEmail('');
-    setCommentRating(5);
+    try {
+      await saveReviewToFirestore(newRev);
+      setReviews(prev => [newRev, ...prev]);
+      setCommentText('');
+      setCommentEmail('');
+      setCommentRating(5);
+    } catch (err: any) {
+      console.error("Failed to post review to Firestore:", err);
+      alert(language === 'es' ? 'No se pudo guardar el comentario en la base de datos de Firebase.' : 'Database error saving review to Firebase.');
+    }
   };
 
   // Filter video collection dynamically
