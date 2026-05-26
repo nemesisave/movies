@@ -21,7 +21,30 @@ const USERS_COL = 'users';
  * keeping the standard JSON-safe and database-clean data structure.
  */
 function sanitize<T>(data: T): T {
-  return JSON.parse(JSON.stringify(data)) as T;
+  if (data === undefined) {
+    return null as unknown as T;
+  }
+  if (data === null) {
+    return null as unknown as T;
+  }
+  if (Array.isArray(data)) {
+    return data
+      .filter((item) => item !== undefined)
+      .map((item) => sanitize(item)) as unknown as T;
+  }
+  if (typeof data === 'object') {
+    const cleaned: any = {};
+    for (const key in data) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        const val = (data as any)[key];
+        if (val !== undefined) {
+          cleaned[key] = sanitize(val);
+        }
+      }
+    }
+    return cleaned as T;
+  }
+  return data;
 }
 
 /**

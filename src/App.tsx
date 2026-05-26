@@ -462,6 +462,7 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [isGlobalTvMode, setIsGlobalTvMode] = useState<boolean>(false);
   const [isTheater, setIsTheater] = useState<boolean>(false);
   const [activeEpisode, setActiveEpisode] = useState<Episode | null>(null);
   const [isPlayerOpen, setIsPlayerOpen] = useState<boolean>(false);
@@ -1311,6 +1312,27 @@ export default function App() {
                         <Settings className="w-4 h-4 text-gray-400" />
                         <span>{isAdminOpen ? (language === 'es' ? 'Cerrar Gestor' : 'Close Admin Panel') : (language === 'es' ? 'Gestor de Películas' : 'Admin Film Uploads')}</span>
                       </button>
+
+                      {/* Global Smart TV Mode toggle */}
+                      <button
+                        id="profile-tv-mode-toggle-btn"
+                        type="button"
+                        onClick={() => {
+                          setIsGlobalTvMode(!isGlobalTvMode);
+                          setActiveHeaderMenu(null);
+                        }}
+                        className={`w-full text-left text-xs px-3 py-2 rounded border transition-all cursor-pointer flex items-center justify-between font-medium ${
+                          isGlobalTvMode 
+                            ? 'bg-[#E50914] text-white border-transparent shadow' 
+                            : 'bg-[#121214]/40 hover:bg-[#121214]/90 border border-transparent hover:border-white/5 text-gray-300'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <Tv className="w-4 h-4" />
+                          <span>{language === 'es' ? 'Modo Smart TV 10ft' : 'Smart TV 10ft Mode'}</span>
+                        </div>
+                        <span className="font-extrabold uppercase tracking-wider text-[11px] font-mono">{isGlobalTvMode ? 'ON' : 'OFF'}</span>
+                      </button>
                     </div>
 
                     <button
@@ -1325,7 +1347,7 @@ export default function App() {
                         setIsAdminOpen(false);
                         setActiveHeaderMenu(null);
                       }}
-                      className="w-full text-center py-2 bg-red-650 hover:bg-red-750 text-white font-extrabold text-xs rounded transition-all cursor-pointer"
+                      className="w-full text-center py-2 bg-red-650 hover:bg-red-755 text-white font-extrabold text-xs rounded transition-all cursor-pointer"
                     >
                       {language === 'es' ? 'Cerrar Sesión' : 'Sign Out'}
                     </button>
@@ -1348,15 +1370,32 @@ export default function App() {
                       {language === 'es' ? 'Iniciar Sesión Admin' : 'Admin Login'}
                     </button>
 
-                    <div className="border-t border-white/5 pt-2 flex justify-center">
+                    <div className="border-t border-white/5 pt-2.5 flex flex-col gap-2.5">
                       <button
                         id="profile-lang-fallback-btn"
                         type="button"
                         onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
-                        className="flex items-center gap-1.5 text-[10px] text-gray-400 hover:text-white transition-colors cursor-pointer"
+                        className="flex items-center justify-center gap-1.5 text-[10px] text-gray-400 hover:text-white transition-colors cursor-pointer"
                       >
                         <Globe className="w-3.5 h-3.5 text-gray-500" />
                         <span>{language === 'es' ? 'Cambiar a Inglés' : 'Switch to English'}</span>
+                      </button>
+
+                      <button
+                        id="global-tv-mode-toggle-guest-btn"
+                        type="button"
+                        onClick={() => {
+                          setIsGlobalTvMode(!isGlobalTvMode);
+                          setActiveHeaderMenu(null);
+                        }}
+                        className={`flex items-center justify-center gap-1.5 text-[10px] py-1.5 px-3 rounded transition-all cursor-pointer font-bold ${
+                          isGlobalTvMode 
+                            ? 'bg-[#E50914] text-white shadow' 
+                            : 'text-gray-400 hover:text-white bg-white/5 border border-white/5'
+                        }`}
+                      >
+                        <Tv className="w-3.5 h-3.5" />
+                        <span>{language === 'es' ? 'Modo Smart TV: ' + (isGlobalTvMode ? 'SÍ' : 'NO') : 'Smart TV Mode: ' + (isGlobalTvMode ? 'ON' : 'OFF')}</span>
                       </button>
                     </div>
                   </div>
@@ -1446,6 +1485,7 @@ export default function App() {
               activeEpisode={activeEpisode}
               onPlayEpisode={(ep) => setActiveEpisode(ep)}
               isLiveStream={isLiveStream}
+              isTvModeInitial={isGlobalTvMode}
             />
           </div>
 
@@ -2338,10 +2378,22 @@ export default function App() {
         </section>
       )}
 
-      {/* MAIN SHELVES DISPLAY */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12">
-        {isAdminOpen && isLoggedIn ? (
-          <div className="animate-fadeIn min-h-[500px]">
+      {/* ADMINISTRATIVE DASHBOARD (OPENED IN A DEDICATED SEPARATE SECTION) */}
+      {isAdminOpen && isLoggedIn && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-6 animate-fadeIn">
+          <div className="bg-neutral-900 border border-white/5 overflow-hidden shadow-2xl p-6 rounded-2xl relative">
+            <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-6">
+              <h2 className="text-lg md:text-xl font-black text-white uppercase tracking-tight flex items-center gap-2 font-sans">
+                <span className="p-1 px-2.5 bg-red-600 rounded-lg text-xs font-mono">CMS</span>
+                <span>{language === 'es' ? 'CONSOLA DE ADMINISTRACIÓN' : 'ADMINISTRATIVE PANEL'}</span>
+              </h2>
+              <button 
+                onClick={() => setIsAdminOpen(false)}
+                className="px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-gray-300 hover:text-white rounded-lg text-xs font-bold transition-all cursor-pointer"
+              >
+                {language === 'es' ? 'Ocultar Consola' : 'Hide Console'}
+              </button>
+            </div>
             <UploadDashboard
               language={language}
               translations={t}
@@ -2352,8 +2404,12 @@ export default function App() {
               onUpdateVideo={handleUpdateVideo}
             />
           </div>
-        ) : (
-          <>
+        </section>
+      )}
+
+      {/* MAIN SHELVES DISPLAY */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12">
+        <>
             {/* VIEWPORTS ROUTER FOR SPECIFIC CATEGORY TABS OR SEARCH */}
         {(selectedCategory !== 'all' || searchQuery !== '') && (
           <section className="space-y-6 animate-fadeIn pb-12">
@@ -2450,7 +2506,7 @@ export default function App() {
                     <div
                       key={vid!.id}
                       onClick={() => handleSelectVideo(vid!)}
-                      className="w-[140px] sm:w-[170px] shrink-0 bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300 shadow-md relative"
+                      className={`${isGlobalTvMode ? 'w-[190px] sm:w-[220px]' : 'w-[140px] sm:w-[170px]'} shrink-0 bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300 shadow-md relative`}
                     >
                       <div className="aspect-[2/3] relative overflow-hidden bg-neutral-950">
                         <img
@@ -2467,10 +2523,10 @@ export default function App() {
                       </div>
 
                       <div className="p-2.5">
-                        <h4 className="text-[11px] font-bold text-white truncate max-w-full group-hover:text-[#E50914] transition-colors">
+                        <h4 className={`font-bold text-white truncate max-w-full group-hover:text-[#E50914] transition-colors ${isGlobalTvMode ? 'text-xs sm:text-sm' : 'text-[11px]'}`}>
                           {language === 'es' ? vid!.title_es : vid!.title_en}
                         </h4>
-                        <p className="text-[9px] text-gray-500 font-mono mt-0.5">
+                        <p className={`font-mono mt-0.5 ${isGlobalTvMode ? 'text-[10px] sm:text-xs text-gray-400' : 'text-[9px] text-gray-500'}`}>
                           {vid!.year} • {vid!.duration}
                         </p>
                       </div>
@@ -2513,7 +2569,7 @@ export default function App() {
                     <div
                       key={vid!.id}
                       onClick={() => handleSelectVideo(vid!)}
-                      className="w-[140px] sm:w-[170px] shrink-0 bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300 shadow-md relative"
+                      className={`${isGlobalTvMode ? 'w-[190px] sm:w-[220px]' : 'w-[140px] sm:w-[170px]'} shrink-0 bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300 shadow-md relative`}
                     >
                       <div className="aspect-[2/3] relative overflow-hidden bg-neutral-950">
                         <img
@@ -2530,10 +2586,10 @@ export default function App() {
                       </div>
 
                       <div className="p-2.5">
-                        <h4 className="text-[11px] font-bold text-white truncate max-w-full group-hover:text-[#E50914] transition-colors">
+                        <h4 className={`font-bold text-white truncate max-w-full group-hover:text-[#E50914] transition-colors ${isGlobalTvMode ? 'text-xs sm:text-sm' : 'text-[11px]'}`}>
                           {language === 'es' ? vid!.title_es : vid!.title_en}
                         </h4>
-                        <p className="text-[9px] text-gray-500 font-mono mt-0.5">
+                        <p className={`font-mono mt-0.5 ${isGlobalTvMode ? 'text-[10px] sm:text-xs text-gray-400' : 'text-[9px] text-gray-500'}`}>
                           {vid!.year} • {vid!.duration}
                         </p>
                       </div>
@@ -2582,7 +2638,7 @@ export default function App() {
                     <div
                       key={vid!.id}
                       onClick={() => handleSelectVideo(vid!)}
-                      className="w-[140px] sm:w-[170px] shrink-0 bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300 shadow-md relative"
+                      className={`${isGlobalTvMode ? 'w-[190px] sm:w-[220px]' : 'w-[140px] sm:w-[170px]'} shrink-0 bg-neutral-900 border border-white/5 hover:border-[#E50914]/30 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300 shadow-md relative`}
                     >
                       <div className="aspect-[2/3] relative overflow-hidden bg-neutral-950">
                         <img
@@ -2599,10 +2655,10 @@ export default function App() {
                       </div>
 
                       <div className="p-2.5">
-                        <h4 className="text-[11px] font-bold text-white truncate max-w-full group-hover:text-[#E50914] transition-colors">
+                        <h4 className={`font-bold text-white truncate max-w-full group-hover:text-[#E50914] transition-colors ${isGlobalTvMode ? 'text-xs sm:text-sm' : 'text-[11px]'}`}>
                           {language === 'es' ? vid!.title_es : vid!.title_en}
                         </h4>
-                        <p className="text-[9px] text-gray-500 font-mono mt-0.5">
+                        <p className={`font-mono mt-0.5 ${isGlobalTvMode ? 'text-[10px] sm:text-xs text-gray-400' : 'text-[9px] text-gray-500'}`}>
                           {vid!.year} • {vid!.duration}
                         </p>
                       </div>
@@ -2672,7 +2728,6 @@ export default function App() {
           </div>
         )}
           </>
-        )}
       </main>
 
       {/* SCREENSHOT ACCURATE PREMIUM FOOTER SECTION */}

@@ -38,6 +38,7 @@ interface JWPlayerProps {
   activeEpisode?: Episode | null;
   onPlayEpisode?: (episode: Episode) => void;
   isLiveStream?: boolean;
+  isTvModeInitial?: boolean;
 }
 
 // 6 Classic Golden Age movies matching Screenshot 1
@@ -195,7 +196,8 @@ export default function JWPlayer({
   onClose,
   activeEpisode = null,
   onPlayEpisode = () => {},
-  isLiveStream = false
+  isLiveStream = false,
+  isTvModeInitial = false
 }: JWPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerContainerRef = useRef<HTMLDivElement>(null);
@@ -235,6 +237,11 @@ export default function JWPlayer({
   const [actionLabel, setActionLabel] = useState<string | null>(null);
   const actionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Smartphone touch tracker & Smart TV mode / Simulated Casting optimization states
+  const lastTouchRef = useRef<number>(0);
+  const [isTvMode, setIsTvMode] = useState<boolean>(isTvModeInitial);
+  const [isCasting, setIsCasting] = useState<boolean>(false);
 
   const testStreamUrl = video.streams?.find(s => s.label === '1080p')?.url || video.streams?.[0]?.url || '';
 
@@ -547,10 +554,12 @@ export default function JWPlayer({
   const isClassicMovie = video.rating === 'PG' || video.genre_es.toLowerCase().includes('classic') || video.id.includes('ama-tu-projimo') || video.id.includes('v-class-');
 
   // Dynamic values of custom subtitle styling attributes
-  let sizeClass = 'text-base md:text-lg';
-  if (subSize === 'sm') sizeClass = 'text-xs md:text-sm';
-  if (subSize === 'lg') sizeClass = 'text-lg md:text-xl';
-  if (subSize === 'xl') sizeClass = 'text-xl md:text-3xl';
+  let sizeClass = isTvMode ? 'text-2xl md:text-4xl font-extrabold tracking-wider px-7 py-3 shadow-[0_0_50px_rgba(0,0,0,0.95)]' : 'text-base md:text-lg';
+  if (!isTvMode) {
+    if (subSize === 'sm') sizeClass = 'text-xs md:text-sm';
+    if (subSize === 'lg') sizeClass = 'text-lg md:text-xl';
+    if (subSize === 'xl') sizeClass = 'text-xl md:text-3xl';
+  }
 
   let colorClass = 'text-white bg-black/85 border-white/10';
   if (subColor === 'yellow') colorClass = 'text-yellow-400 bg-neutral-950/95 border-yellow-500/20';
@@ -562,8 +571,116 @@ export default function JWPlayer({
       ref={playerContainerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => isPlaying && setControlsVisible(false)}
-      className="relative w-full h-full min-h-screen bg-black overflow-hidden flex flex-col justify-between z-10 select-none animate-fadeIn"
+      className={`relative w-full h-full min-h-screen bg-black overflow-hidden flex flex-col justify-between z-10 select-none animate-fadeIn transition-all ${
+        isTvMode ? 'p-1' : ''
+      }`}
     >
+      {/* SIMULATED CASTING SYSTEM OVERLAY (Optimizado para Conexión TV) */}
+      {isCasting && (
+        <div className="absolute inset-0 z-[999] bg-[#0c0d10]/98 flex flex-col items-center justify-center text-center p-6 animate-fadeIn font-sans">
+          <div className="max-w-md space-y-6 flex flex-col items-center">
+            {/* Spinning radar graphic */}
+            <div className="relative w-32 h-32 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full border border-[#E50914]/20 animate-ping" />
+              <div className="absolute inset-4 rounded-full border border-yellow-400/40 animate-pulse" />
+              <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#E50914] to-yellow-400 flex items-center justify-center text-white shadow-2xl relative z-10 animate-bounce">
+                <Cast className="w-8 h-8 stroke-[2]" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="text-xl font-black text-white uppercase tracking-wider">
+                {language === 'es' ? 'Transmitiendo a Smart TV' : 'Casting to Smart TV'}
+              </h3>
+              <p className="text-xs text-[#E50914] font-black tracking-widest uppercase">
+                {video.title_es}
+              </p>
+              <p className="text-xs text-gray-400 leading-relaxed max-w-sm pt-2 select-none">
+                {language === 'es' 
+                  ? 'La película se está reproduciendo en tu Smart TV en calidad Ultra HD 4K de forma gratuita. Usa tu smartphone como control remoto.' 
+                  : 'The stream is now playing on your Smart TV in free Ultra HD 4K. Use this smartphone screen as your controller remote.'}
+              </p>
+            </div>
+
+            {/* Smart simulated remote controller helpers buttons inside casting screen */}
+            <div className="grid grid-cols-3 gap-3 w-full bg-neutral-900/60 p-4 rounded-2xl border border-white/5 shadow-2xl">
+              <button
+                onClick={() => {
+                  if (videoRef.current) {
+                    videoRef.current.currentTime = Math.max(videoRef.current.currentTime - 10, 0);
+                    flashActionLabel("-10s");
+                  }
+                }}
+                className="py-3 bg-neutral-800 hover:bg-neutral-700 font-bold rounded-xl text-xs active:scale-95 transition-all text-gray-200 cursor-pointer"
+              >
+                ⏪ -10s
+              </button>
+              <button
+                onClick={handlePlayPause}
+                className="py-3 bg-[#E50914]/20 hover:bg-[#E50914] border border-[#E50914]/30 hover:border-transparent font-black rounded-xl text-xs active:scale-95 transition-all text-white cursor-pointer"
+              >
+                {isPlaying ? "⏸️ PAUSA" : "▶️ PLAY"}
+              </button>
+              <button
+                onClick={() => {
+                  if (videoRef.current) {
+                    videoRef.current.currentTime = Math.min(videoRef.current.currentTime + 10, duration);
+                    flashActionLabel("+10s");
+                  }
+                }}
+                className="py-3 bg-neutral-800 hover:bg-neutral-700 font-bold rounded-xl text-xs active:scale-95 transition-all text-gray-200 cursor-pointer"
+              >
+                +10s ⏩
+              </button>
+
+              <button
+                onClick={() => {
+                  if (videoRef.current) {
+                    const nv = Math.max(volume - 0.1, 0);
+                    videoRef.current.volume = nv;
+                    setVolume(nv);
+                    flashActionLabel(`VOL ${Math.round(nv * 100)}%`);
+                  }
+                }}
+                className="py-2.5 bg-neutral-850 hover:bg-neutral-800 font-bold rounded-lg text-[10px] text-gray-300 cursor-pointer"
+              >
+                🔉 VOL -
+              </button>
+              <button
+                onClick={handleMuteToggle}
+                className="py-2.5 bg-neutral-850 hover:bg-neutral-800 font-bold rounded-lg text-[10px] text-gray-300 cursor-pointer"
+              >
+                🔇 MUTEAR
+              </button>
+              <button
+                onClick={() => {
+                  if (videoRef.current) {
+                    const nv = Math.min(volume + 0.1, 1);
+                    videoRef.current.volume = nv;
+                    setVolume(nv);
+                    videoRef.current.muted = false;
+                    setIsMuted(false);
+                    flashActionLabel(`VOL ${Math.round(nv * 100)}%`);
+                  }
+                }}
+                className="py-2.5 bg-neutral-850 hover:bg-neutral-800 font-bold rounded-lg text-[10px] text-gray-300 cursor-pointer"
+              >
+                🔊 VOL +
+              </button>
+            </div>
+
+            <button
+              onClick={() => {
+                setIsCasting(false);
+                flashActionLabel("CONEXIÓN CERRADA");
+              }}
+              className="px-6 py-2 bg-[#E50914] hover:bg-red-700 text-xs font-black text-white rounded-lg transition-colors cursor-pointer select-none"
+            >
+              {language === 'es' ? 'Detener Transmisión' : 'Disconnect Cast'}
+            </button>
+          </div>
+        </div>
+      )}
       {/* Scope style block for clean, self-contained custom keyframes (ripple ping and subtle glow) */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes rippleFade {
@@ -610,6 +727,30 @@ export default function JWPlayer({
           }}
           onClick={handlePlayPause}
           onDoubleClick={handleVideoDoubleClick}
+          onTouchStart={(e) => {
+            const now = Date.now();
+            const timespan = now - lastTouchRef.current;
+            if (timespan < 300) {
+              if (isCurrentlyLive || !videoRef.current) return;
+              e.preventDefault();
+              const rect = e.currentTarget.getBoundingClientRect();
+              const touch = e.touches[0] || e.changedTouches[0];
+              if (touch) {
+                const touchX = touch.clientX - rect.left;
+                const width = rect.width;
+                if (touchX > width / 2) {
+                  videoRef.current.currentTime = Math.min(videoRef.current.currentTime + 10, duration);
+                  triggerRippleEffect('skip-forward');
+                } else {
+                  videoRef.current.currentTime = Math.max(videoRef.current.currentTime - 10, 0);
+                  triggerRippleEffect('skip-backward');
+                }
+              }
+            } else {
+              handleMouseMove();
+            }
+            lastTouchRef.current = now;
+          }}
           className={`w-full h-full object-contain pointer-events-auto cursor-pointer transition-all duration-300 ${
             isClassicMovie ? 'grayscale contrast-[1.12] brightness-[1.04]' : ''
           }`}
@@ -912,8 +1053,6 @@ export default function JWPlayer({
           </div>
         </div>
       )}
-
-      {/* BOTTOM LAYOUT GRID: SEEK TIMELINE PROGRESS BAR AND VOLUME ROW */}
       <div
         id="jwp-bottom-gradient-wrapper"
         className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/85 to-transparent pt-32 pb-6 px-6 md:px-12 z-20 transition-all duration-300 ${
@@ -922,7 +1061,23 @@ export default function JWPlayer({
       >
         {isPlaying ? (
           /* ACTIVE PLAYING HUD: Elegant Seekbar with Yellow ad-breaks ticks */
-          <div className="flex flex-col gap-3 w-full animate-fadeIn">
+          <div className="flex flex-col gap-3.5 w-full animate-fadeIn">
+            {/* SMART TV CUSTOM INSTRUCTIONS FOR REMOTES */}
+            {isTvMode && (
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10px] sm:text-xs font-black text-gray-300 font-sans px-1 pb-2.5 tracking-wider uppercase select-none border-b border-white/5 mb-1 animate-fadeIn">
+                <span className="text-[#E50914] flex items-center gap-1">📺 {language === 'es' ? 'CONTROL REMOTO' : 'REMOTE CONTROL'}:</span>
+                <span className="bg-white/10 px-1.5 py-0.5 rounded text-[9px] font-mono text-white">[◀ / ▶] SEEK</span>
+                <span className="text-gray-600">•</span>
+                <span className="bg-white/10 px-1.5 py-0.5 rounded text-[9px] font-mono text-white">[▲ / ▼] VOL</span>
+                <span className="text-gray-600">•</span>
+                <span className="bg-white/10 px-1.5 py-0.5 rounded text-[9px] font-mono text-white">[ESPACIO / ENTER] PLAY/PAUSA</span>
+                <span className="text-gray-600">•</span>
+                <span className="bg-white/10 px-1.5 py-0.5 rounded text-[9px] font-mono text-white">[M] MUTE</span>
+                <span className="text-gray-600">•</span>
+                <span className="bg-white/10 px-1.5 py-0.5 rounded text-[9px] font-mono text-white">[ESC] CLOSE</span>
+              </div>
+            )}
+
             <div className="flex items-center gap-6 w-full group/timeline">
               
               {isCurrentlyLive ? (
@@ -936,13 +1091,13 @@ export default function JWPlayer({
                 </div>
               ) : (
                 /* NORMAL RECORD TIMELINE TRACK WITH YELLOW TICKS - Posas Films / Canela custom screens layout */
-                <div className="relative flex-1 group/bar h-3.5 flex items-center">
+                <div className={`relative flex-1 group/bar ${isTvMode ? 'h-5' : 'h-3.5'} flex items-center`}>
                   {/* Background track bar */}
-                  <div className="absolute inset-x-0 h-[3px] bg-white/20 rounded-full" />
+                  <div className={`absolute inset-x-0 bg-white/20 rounded-full ${isTvMode ? 'h-[5px]' : 'h-[3px]'}`} />
                   
                   {/* Active playing RED progress bar */}
                   <div
-                    className="absolute left-0 h-[3px] bg-[#E50914] rounded-full"
+                    className={`absolute left-0 bg-[#E50914] rounded-full ${isTvMode ? 'h-[5px]' : 'h-[3px]'}`}
                     style={{ width: `${progress}%` }}
                   />
                   
@@ -959,15 +1114,19 @@ export default function JWPlayer({
                   
                   {/* Progress scrubber orb */}
                   <div
-                    className="absolute w-3.5 h-3.5 rounded-full bg-[#E50914] border border-white shadow-xl pointer-events-none scale-100 group-hover/timeline:scale-115 transition-all"
-                    style={{ left: `calc(${progress}% - 7px)` }}
+                    className={`absolute rounded-full bg-[#E50914] border border-white shadow-xl pointer-events-none transition-all ${
+                      isTvMode 
+                        ? 'w-5 h-5 -mt-0.5 scale-100 group-hover/timeline:scale-110' 
+                        : 'w-3.5 h-3.5 scale-100 group-hover/timeline:scale-115'
+                    }`}
+                    style={{ left: `calc(${progress}% - ${isTvMode ? '10px' : '7.5px'})` }}
                   />
                 </div>
               )}
-
+ 
               {/* Remaining timer or Live timing stamp */}
               {!isCurrentlyLive && (
-                <span className="text-white font-semibold font-sans text-xs md:text-sm select-none tracking-tight">
+                <span className={`text-white font-sans select-none tracking-tight ${isTvMode ? 'text-sm sm:text-base font-extrabold' : 'text-xs md:text-sm font-semibold'}`}>
                   {formatTime(Math.max(duration - currentTime, 0))}
                 </span>
               )}
@@ -1018,22 +1177,41 @@ export default function JWPlayer({
               </button>
 
               {/* Right Column Icons: Keyboard shortcuts menu, picture-in-picture stream casting, maximize sizing */}
-              <div className="flex items-center gap-5">
+              <div className="flex items-center gap-4 flex-wrap">
+                {/* ADVANCED SMART TV TOGGLE SENSOR */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const nextMode = !isTvMode;
+                    setIsTvMode(nextMode);
+                    flashActionLabel(nextMode ? "MODO SMART TV: ACTIVO 📺" : "MODO SMART TV: DESACTIVADO");
+                  }}
+                  className={`transition-all px-2 py-1.5 rounded-lg cursor-pointer focus:outline-none flex items-center gap-1.5 text-xs font-black select-none ${
+                    isTvMode 
+                      ? 'bg-[#E50914] text-white border border-red-500/20 shadow-lg scale-105 animate-pulse' 
+                      : 'text-[#E50914]/90 hover:text-white hover:bg-red-500/10 border border-red-500/10 bg-red-500/[0.02]'
+                  }`}
+                  title={language === 'es' ? 'Modo Smart TV (Optimizado)' : 'Smart TV Mode (10ft Control)'}
+                >
+                  <Tv className="w-4 h-4 stroke-[2]" />
+                  <span className="text-[9px] uppercase font-sans font-black tracking-widest">{language === 'es' ? 'MODO TV' : 'TV MODE'}</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={() => setIsKeyboardHelpOpen(true)}
                   className="text-white hover:text-gray-350 transition-colors p-1 cursor-pointer focus:outline-none"
                   title={language === 'es' ? 'Atajos de Teclado' : 'Keyboard Shortcuts'}
                 >
-                  <Keyboard className="w-5.5 h-5.5 stroke-[1.5]" />
+                  <Keyboard className="w-5 h-5 stroke-[1.5]" />
                 </button>
 
                 <button
-                  onClick={() => flashActionLabel("CASTING...")}
+                  onClick={() => setIsCasting(true)}
                   className="text-white hover:text-gray-350 transition-colors p-1 cursor-pointer focus:outline-none"
                   title="Casting"
                 >
-                  <Cast className="w-5.5 h-5.5 stroke-[1.5]" />
+                  <Cast className="w-5 h-5 stroke-[1.5]" />
                 </button>
 
                 <button
@@ -1041,7 +1219,7 @@ export default function JWPlayer({
                   className="text-white hover:text-gray-350 transition-colors p-1 cursor-pointer focus:outline-none"
                   title="Picture in Picture"
                 >
-                  <AppWindow className="w-5.5 h-5.5 stroke-[1.5]" />
+                  <AppWindow className="w-5 h-5 stroke-[1.5]" />
                 </button>
 
                 <button
@@ -1050,9 +1228,9 @@ export default function JWPlayer({
                   title="Fullscreen"
                 >
                   {isFullscreen ? (
-                    <Minimize className="w-5.5 h-5.5 stroke-[1.5]" />
+                    <Minimize className="w-5 h-5 stroke-[1.5]" />
                   ) : (
-                    <Maximize className="w-5.5 h-5.5 stroke-[1.5]" />
+                    <Maximize className="w-5 h-5 stroke-[1.5]" />
                   )}
                 </button>
               </div>
